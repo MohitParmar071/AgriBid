@@ -1,0 +1,23 @@
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">🌾<span class="logoSpan">Agri</span>Bid</div>
+      <ul class="nav-links">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/bid">Bidding</a></li>
+        <li><a href="/Myorder">My Order</a></li>
+        <div class="cart-container">
+          <i class="fa fa-shopping-cart cart-icon"></i>
+          <span id="cartCount" class="cart-count"></span>
+        </div>
+        <!-- Checkout Button -->
+        <form id="checkoutForm" action="/buying" method="POST" >
+          <input type="hidden" name="cartData" id="cartData" />
+          </form>
+        <li><a href="#">
+            <img src="<%=user.img%>" alt="Profile" id="profileBtn" class="profile-icon" />
+        </a></li>
+      </ul>
+    </nav>
+  </header>

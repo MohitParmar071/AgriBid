@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Document</title>
+    <link  href="/css/home.css" rel="stylesheet">
+</head>
+<body>
+    <%- include("../includes/webnavbar.ejs") %>
+ <!-- Popup Box -->
+<div id="profilePopup" class="popup_identify">
+  <div class="popup_header_identify">
+    <span class="close_btn_identify" id="closePopup">&times;</span>
+  </div>
+  <div class="popup_content_identify">
+    <img src="<%=user.img%>" alt="User" class="popup_avatar_identify">
+    <h3><%=user.name%></h3>
+    <p><strong>Email : </strong><%=user.email%></p>
+    <p><strong>Address : </strong><%=user.address%></p>
+    <form  method="get" action="/logout">
+    <button class="btn_message_identify">Logout</button>
+    </form>
+  </div>
+</div>
+
+        <div class="conatiner">
+           <%-body%>           
+       </div>
+
+       <script>
+//Profile popup
+// Select elements
+const profileBtn = document.getElementById("profileBtn");
+const popup = document.getElementById("profilePopup");
+const closePopup = document.getElementById("closePopup");
+const overlay = document.getElementById("overlay");
+
+// Open popup
+profileBtn.addEventListener("click", () => {
+  popup.style.display = "block";
+  overlay.style.display = "block";
+});
+
+// Close popup
+closePopup.addEventListener("click", () => {
+  popup.style.display = "none";
+  overlay.style.display = "none";
+});
+
+// Close when clicking outside
+overlay.addEventListener("click", () => {
+  popup.style.display = "none";
+  overlay.style.display = "none";
+});
+       </script>
+           
+</body>
+</html>

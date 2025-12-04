@@ -1,1 +1,1 @@
-# AgriBid
+Designed and developed AgriBid, an end-to-end agricultural auction system where farmers can upload crop listings and buyers can place bids securely. The project includes features like OTP login, session management, forgot-password flow, guidance content section, and a clean responsive UI built using Node.js, Express, EJS, HTML, CSS, and MongoDB.

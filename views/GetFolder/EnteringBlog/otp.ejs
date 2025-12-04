@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/otp.css" />
+
+<main class="otp-hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <section class="otp-card">
+    <h2>OTP Verification</h2>
+    <p class="subtitle">We have sent a code to <strong><%= email %></strong></p>
+
+    <form method="post" action="/otp" class="otp-form">
+      <div class="otp-input-wrap">
+        <!-- hidden field not required anymore since backend uses session -->
+        <input type="text" name="otp" maxlength="6" placeholder="Enter 4-digit OTP" required />
+      </div>
+      <button type="submit" class="btn-primary">Verify</button>
+    </form>
+
+    <div class="helper-row">
+      <!-- match backend route name -->
+      <a href="/Re_send" class="link-btn">Resend OTP</a>
+      <a href="/login" class="link-btn">Back to Login</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p> &copy; 2025 AgriBid. All Rights Reserved.
+    <a href="/" class="footer-btn">Back</a>
+  </p>
+</footer>

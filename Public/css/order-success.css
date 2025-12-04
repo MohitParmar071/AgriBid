@@ -1,0 +1,83 @@
+.order-success-container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #f9fff9;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.success-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.success-header h1 {
+  color: #2d7a32;
+}
+
+.order-details {
+  background: #eafbe8;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.status {
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.status.paid { background: #d4edda; color: #155724; }
+.status.pending { background: #fff3cd; color: #856404; }
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.order-table th, .order-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.order-table th {
+  background: #2d7a32;
+  color: white;
+}
+
+.img-td img {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #777;
+  margin: 20px 0;
+}
+
+.action-btns {
+  text-align: center;
+}
+
+.btn {
+  background: #28a745;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #218838;
+}

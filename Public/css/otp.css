@@ -1,0 +1,140 @@
+:root {
+  --agri-dark: #1b5e20;
+  --agri-mid: #2e7d32;
+  --agri-light: #a5d6a7;
+  --muted: #6b7280;
+  --card-bg: rgba(255, 255, 255, 0.15);
+}
+
+.otp-hero {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  background: url("https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg") center/cover no-repeat;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.otp-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  color: black;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.otp-card h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #0b3311;
+  margin-bottom: 20px;
+}
+
+.otp-form {
+  display: grid;
+  gap: 15px;
+}
+
+.otp-input-wrap input {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: black;
+  text-align: center;
+  outline: none;
+}
+.otp-input-wrap input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0b3311;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #a5d6a7, #66bb6a);
+  transition: transform 0.1s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.03);
+}
+
+.helper-row {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.link-btn {
+  background: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+/* Footer */
+.site-footer {
+  background: linear-gradient(90deg, var(--agri-mid), var(--agri-dark));
+  color: #e8f5e9;
+  padding: 12px 20px;
+  text-align: center;
+}
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.footer-links a {
+  color: #e8f5e9;
+  margin-left: 10px;
+  text-decoration: none;
+}
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background-color: #1b5e20;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+.footer-btn{
+  text-decoration: none;
+  color: black;
+  padding:12px;
+  border-radius: 20%;
+  background-color: yellow;
+}

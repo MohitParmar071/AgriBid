@@ -1,0 +1,238 @@
+/* ====== market.css — scoped under .agri-market ====== */
+/* Namespacing: all rules start with .agri-market to avoid conflicts */
+
+.agri-market { font-family: 'Poppins', sans-serif; color: #222; }
+
+/* HERO */
+.agri-market__hero {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(34, 139, 34, 0.08), rgba(34, 139, 34, 0.02));
+  border-bottom: 1px solid rgba(34,139,34,0.06);
+}
+.agri-market__hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 40px;
+  align-items: center;
+}
+.hero-left { padding: 16px; }
+.hero-title {
+  font-size: 2.6rem;
+  color: #1b5e20;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+.hero-sub {
+  color: #45614a;
+  font-size: 1.05rem;
+  margin-bottom: 18px;
+}
+.hero-ctas .btn {
+  display:inline-block;
+  padding: 12px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: 10px;
+  box-shadow: 0 8px 22px rgba(34, 139, 34, 0.08);
+  border: none;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+.hero-ctas .hero-btn { background: linear-gradient(135deg,#43a047,#2e7d32); color: #fff; }
+.hero-ctas .hero-btn:hover { transform: translateY(-4px); box-shadow: 0 14px 34px rgba(34,139,34,0.14); }
+.hero-ctas .ghost { background: transparent; color: #2e7d32; border: 2px solid rgba(46,125,50,0.12); }
+
+.hero-right { text-align:right; }
+.hero-illustration {
+  width: 420px;
+  max-width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 14px 40px rgba(12, 92, 24, 0.08);
+  border: 6px solid rgba(255,255,255,0.6);
+}
+
+/* CATALOG SECTION */
+.agri-market__catalog {
+  max-width: 1200px;
+  margin: 48px auto;
+  padding: 0 20px 60px;
+}
+
+/* Controls row */
+.catalog-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.search-form {
+  flex: 1 1 480px;
+  display:flex;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 6px 18px rgba(12,12,12,0.04);
+  align-items:center;
+  border: 1px solid rgba(34,139,34,0.06);
+}
+.search-form input {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  font-size: 15px;
+  flex: 1;
+  border-radius: 999px;
+}
+.search-btn {
+  border:none;
+  background: linear-gradient(135deg,#43a047,#2e7d32);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 999px;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+/* filter row */
+.filter-row {
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.filter-row select {
+  padding: 10px 12px;
+  border-radius:10px;
+  border: 1px solid rgba(34,139,34,0.08);
+  font-weight:600;
+}
+.catalog-stats {
+  color:#2e7d32;
+  background: rgba(67,160,71,0.06);
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-weight:700;
+}
+
+/* Empty state */
+.empty-state {
+  text-align:center;
+  background: linear-gradient(180deg,#fff,#fbfff9);
+  padding: 36px;
+  border-radius: 14px;
+  border: 1px solid rgba(34,139,34,0.05);
+  box-shadow: 0 8px 24px rgba(12,12,12,0.04);
+}
+
+/* GRID */
+.catalog-grid {
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 18px;
+}
+
+/* Crop Card */
+.crop-card {
+  background: linear-gradient(180deg, #ffffff, #fbfffb);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(7, 41, 7, 0.06);
+  transition: transform .28s ease, box-shadow .28s ease;
+  display:flex;
+  flex-direction:column;
+  border: 1px solid rgba(34,139,34,0.04);
+}
+.crop-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px rgba(7, 41, 7, 0.09);
+}
+.card-media {
+  position:relative;
+  height: 190px;
+  overflow:hidden;
+  background: linear-gradient(135deg,#f6fff6,#ffffff);
+}
+.card-media img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition: transform .4s ease;
+}
+.crop-card:hover .card-media img { transform: scale(1.06); }
+.badge {
+  position:absolute;
+  left:12px;
+  bottom:12px;
+  background: linear-gradient(135deg,#e8f5e9,#c8f0d0);
+  color:#1b5e20;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:700;
+  box-shadow: 0 6px 18px rgba(34,139,34,0.06);
+}
+
+/* Body */
+.card-body { padding: 14px 16px 18px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.crop-name { font-size: 1.15rem; color:#184b18; margin-bottom:2px; font-weight:700; }
+.crop-meta { color:#586a58; font-size:0.95rem; display:flex; gap:8px; align-items:center; }
+.crop-meta .price { color:#2e7d32; font-weight:800; }
+.crop-meta .city { color:#6a7a6a; font-weight:600; }
+.dot { opacity:0.35; margin: 0 6px; }
+
+.seller { font-size:0.92rem; color:#4a5a49; }
+.email { color:#2d6b2d; font-weight:700; font-size:0.9rem; }
+
+.card-bottom { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:auto; }
+.left .qty { font-weight:700; color:#1b5e20; }
+.left .upi { font-size:0.85rem; color:#587058; margin-top:6px; }
+
+/* Actions */
+.actions { display:flex; gap:10px; align-items:center; }
+.btn { padding:8px 12px; border-radius:10px; text-decoration:none; font-weight:700; border: 1px solid rgba(0,0,0,0.06); background:#fff; cursor:pointer; transition: transform .18s ease; }
+.btn.small { padding:8px 10px; font-size:14px; }
+.btn.primary { background: linear-gradient(135deg,#43a047,#2e7d32); color:#fff; border:none; box-shadow: 0 8px 20px rgba(34,139,34,0.12); }
+.btn.primary:hover { transform: translateY(-3px); }
+
+/* inline form reset */
+.inline-form { display:inline-block; margin:0; padding:0; }
+
+/* catalog footer */
+.catalog-footer { text-align:center; margin-top:26px; }
+.link.muted { color:#6a7a6a; text-decoration:none; }
+
+/* MODAL */
+.agri-market__modal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background: rgba(18, 44, 18, 0.45); opacity:0; visibility:hidden; transition:opacity .22s ease; z-index:1200; }
+.agri-market__modal.open { opacity:1; visibility:visible; }
+.modal-inner { width: min(980px,95%); background:#fff; border-radius:12px; padding:18px; box-shadow: 0 24px 60px rgba(0,0,0,0.35); position:relative; }
+.modal-close { position:absolute; right:14px; top:12px; border:none; background:#fff; font-size:18px; cursor:pointer; }
+.modal-grid { display:grid; grid-template-columns: 1fr 1fr; gap:18px; align-items:start; }
+.modal-image img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+.modal-info { padding:6px 4px; }
+.modal-info h3 { margin-bottom:8px; color:#184b18; }
+.modal-info p { color:#485a48; margin:6px 0; }
+.modal-actions .btn { margin-right:8px; }
+
+/* small helpers */
+.sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .agri-market__hero-inner { grid-template-columns: 1fr; text-align:center; }
+  .hero-right { order:-1; }
+  .catalog-grid { grid-template-columns: repeat(2,1fr); }
+  .modal-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .catalog-grid { grid-template-columns: 1fr; gap:14px; }
+  .hero-title { font-size: 2rem; }
+  .hero-ctas .btn { width: 100%; margin-bottom:10px; }
+  .hero-right { text-align:center; }
+  .card-media { height: 160px; }
+  .actions { flex-direction:column; gap:8px; }
+  .btn.small { width: 100%; text-align:center; }
+}

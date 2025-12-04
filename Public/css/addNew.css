@@ -1,0 +1,130 @@
+body {
+  background: linear-gradient(to right, #d4edda, #f8f9fa);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+nav {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.form-container {
+  background: #fff;
+  width: 100%;
+  max-width: 1000px;
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #28a745;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  align-items: stretch; /* keep inputs in same row aligned */
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 250px;
+}
+
+label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Inputs, textarea, select */
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 15px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.15);
+}
+
+textarea {
+  resize: none;
+  min-height: 50px;
+}
+
+/* UPI icons */
+.upi-icons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.upi-icons img {
+  height: 22px;
+}
+
+/* Button */
+button {
+  margin-top: 10px;
+  padding: 14px;
+  background: #28a745;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(33, 136, 56, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .input-group {
+    flex: 1 1 100%;
+    min-width: 100%;
+  }
+}

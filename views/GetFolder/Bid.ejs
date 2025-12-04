@@ -1,0 +1,79 @@
+<% layout("../layoutes/WebBoilerplats") %>
+  <title>AgriBid — Live Bids</title>
+  <link rel="stylesheet" href="/css/bid.css">
+
+  <header class="bid-header">
+    <div class="wrap">
+      <h1>🌾 AgriBid — Live Bidding</h1>
+      <div id="datetime" class="datetime">Loading date & time…</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid">
+      <% if (!crops || crops.length === 0) { %>
+        <div class="empty">No active auctions right now.</div>
+      <% } %>
+
+      <% crops.forEach(function(crop){ 
+           const img = crop.imageUrl || '/img/default-crop.jpg';
+           const currentBid = (crop.highestBid && crop.highestBid > 0) ? crop.highestBid : crop.price || 0;
+           const endIso = crop.endTime ? (new Date(crop.endTime)).toISOString() : '';
+      %>
+        <article class="card" id="card-<%= crop._id %>">
+          <div class="media">
+            <img src="<%= img %>" alt="<%= crop.name %>" onerror="this.src='/img/default-crop.jpg'"/>
+          </div>
+
+          <div class="content">
+            <h2 class="title"><%= crop.name %></h2>
+            <% if (crop.description) { %><p class="desc"><%= crop.description %></p><% } %>
+
+            <p class="meta"><strong>Seller:</strong> <%= crop.seller %> — <%= crop.city %></p>
+            <p class="meta"><strong>Quantity:</strong> <%= crop.quantity %></p>
+
+            <p class="bidline">💰 <strong>Current Bid:</strong> ₹<span id="currentBid-<%= crop._id %>"><%= currentBid %> / KG</span></p>
+            <p class="meta">🏷 Base Price: ₹<%= crop.price %></p>
+            <p class="meta">🏆 Highest: <span id="highestBidder-<%= crop._id %>"><%= crop.highestBidder || '—' %></span></p>
+
+            <p class="countdown">⏳ Time Left: 
+              <span class="countdown-timer" 
+                    data-crop="<%= crop._id %>" 
+                    data-end="<%= endIso %>">
+                <% if (!endIso) { %>Not started (first bid starts auction)<% } %>
+              </span>
+            </p>
+
+            <div class="final-msg" id="final-<%= crop._id %>"></div>
+
+            <% if (crop.sold) { %>
+              <div class="sold">✅ Auction Ended — Sold</div>
+            <% } else { %>
+              <form class="bid-form" action="/bid" method="POST" data-cropid="<%= crop._id %>">
+                <input type="hidden" name="cropId" value="<%= crop._id %>">
+                <input name="bidder" type="text" placeholder="Your name" required>
+                <input name="email" type="email" placeholder="Your email" required>
+                <input name="bidAmount" type="number" placeholder="Your bid (₹)" min="1" step="1" required>
+                <button type="submit" class="btn">Place Bid</button>
+              </form>
+            <% } %>
+          </div>
+        </article>
+      <% }) %>
+    </section>
+  </main>
+
+  <script src="/js/bid.js"></script>
+  <script>
+    // Header date/time
+    (function updateDateTime(){
+      function fmt() {
+        const now = new Date();
+        const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric' };
+        document.getElementById('datetime').innerText = 
+          now.toLocaleDateString(undefined, opts) + " | " + now.toLocaleTimeString();
+      }
+      setInterval(fmt,1000);
+      fmt();
+    })();
+  </script>

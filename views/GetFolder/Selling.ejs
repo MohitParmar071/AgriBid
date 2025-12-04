@@ -1,0 +1,80 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/selling.css" />
+
+<main class="selling-container">
+  <h1>🌾 My Selling Crops</h1>
+  <p class="user-info">Logged in as: <%= user.email %></p>
+
+  <!-- Add Crops Button -->
+  <form action="/addNew" class="add-crops-form">
+    <button class="add-crops-btn">➕ Add Crops</button>
+  </form>
+
+  <% if (crops.length === 0) { %>
+    <div class="no-crops">You haven’t listed any crops yet.</div>
+  <% } %>
+
+  <div class="crops-grid">
+    <% crops.forEach(crop => { %>
+      <div class="crop-card">
+        <div class="crop-img-wrapper">
+          <img src="<%= crop.imageUrl %>" alt="<%= crop.name %>" class="crop-img">
+        </div>
+        <div class="crop-info">
+          <h2><%= crop.name %></h2>
+          <p>Type : <%=crop.Type%></p>
+          <p>💰 Price: ₹<%= crop.price %> /kg</p>
+          <p>📦 Quantity: <%= crop.quantity %> kg</p>
+          <p>✉ Seller : <%= crop.email %></p>
+        </div>
+        <div class="card-actions">
+          <button class="btn edit-btn" onclick="openPopup('edit','<%= crop._id %>')">✏ Edit</button>
+          <button class="btn delete-btn" onclick="openPopup('delete','<%= crop._id %>')">🗑 Delete</button>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</main>
+
+
+
+<!-- Overlay -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Popup -->
+<div class="popup" id="authPopup">
+  <span class="closeBtn" onclick="closePopup()">&times;</span>
+  <h2 id="popupTitle">Confirm Action</h2>
+  <form id="authForm" method="POST">
+    <input type="hidden" name="cropId" id="cropId">
+    <input type="hidden" name="action" id="actionType">
+    <button type="submit" class="confirm-btn">✅ Confirm</button>
+  </form>
+</div>
+
+<script>
+function openPopup(action, cropId) {
+  document.getElementById("authPopup").style.display = "block";
+  document.getElementById("overlay").style.display = "block";
+  document.getElementById("actionType").value = action;
+  document.getElementById("cropId").value = cropId;
+
+  // Set form action dynamically
+  const form = document.getElementById("authForm");
+  if (action === "edit") {
+    document.getElementById("popupTitle").innerText = "🔑 Confirm Edit";
+    form.action = `/editAuth/${cropId}?_method=GET`;
+  } else {
+    document.getElementById("popupTitle").innerText = "⚠ Confirm Delete";
+    form.action = `/deleteAuth/${cropId}?_method=DELETE`;
+  }
+}
+
+
+ 
+
+function closePopup() {
+  document.getElementById("authPopup").style.display = "none";
+  document.getElementById("overlay").style.display = "none";
+}
+</script>

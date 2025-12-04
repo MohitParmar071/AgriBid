@@ -1,0 +1,43 @@
+  <title>AgriBid - Farming Guidance</title>
+
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+  <link rel="stylesheet" href="/css/guidance.css" />
+
+  <!-- <header class="site-header">
+    <h1>🌱 AgriBid - Farming Guidance</h1>
+    <p>Share and explore expert farming tips</p>
+  </header> -->
+
+  <main class="container">
+          <section class="guidance-list" id="guidance-list">
+      <h2>📘 Farmer Guidance Library</h2>
+      <div class="cards" id="cards-container"></div>
+    </section>
+
+    <section class="guidance-form">
+      <h2>Add New Guidance</h2>
+      <form id="add-guidance-form">
+        <input type="text" id="guidance-title" placeholder="Enter guidance title" required />
+        <textarea id="guidance-desc" rows="4" placeholder="Enter guidance description" required></textarea>
+        <input type="url" id="guidance-image" placeholder="Enter image URL (optional)" />
+        <button type="submit">Submit Guidance</button>
+      </form>
+    </section>
+    
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span id="close-modal">&times;</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-description"></p>
+    </div>
+  </div>
+
+
+
+
+  <script src="js/guidance.js"></script>
+
+   <%- include("../includes/webfooter.ejs") %>

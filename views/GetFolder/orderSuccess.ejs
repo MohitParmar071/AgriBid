@@ -1,0 +1,73 @@
+<% layout("../layoutes/WebBoilerplats") %>    
+<link rel="stylesheet" href="/css/order-success.css" />    
+
+<div class="order-success-container">    
+  <div class="success-header">    
+    <h1>✅ Order Details</h1>    
+    <p>Thank you for shopping with <strong>AgriBid</strong></p>    
+  </div>    
+
+  <% if (order) { %>    
+    <!-- Order Basic Details -->
+    <div class="order-details">    
+      <p><strong>Order ID:</strong> <%= order._id %></p>    
+      <p><strong>Name:</strong> <%= order.buyerName %></p>    
+      <p><strong>Email:</strong> <%= order.buyerEmail %></p>    
+      <p><strong>Address:</strong> <%= order.buyerAddress %></p>    
+      <p><strong>Total Amount:</strong> ₹ <%= order.totalAmount %></p>    
+
+      <p class="status <%= order.status ? order.status.toLowerCase() : '' %>">    
+        <strong>Status:</strong> <%= order.status || "Pending" %>    
+      </p>    
+    </div>    
+
+    <!-- Order Items -->
+    <% if (order.cartItems && order.cartItems.length > 0) { %>    
+      <table class="order-table">    
+        <thead>    
+          <tr>    
+            <th>Image</th>    
+            <th>Name</th>    
+            <th>Price (₹)</th>    
+            <th>Quantity</th>    
+            <th>Total (₹)</th>    
+            <th>Seller Email</th>    
+          </tr>    
+        </thead>    
+        <tbody>    
+          <% order.cartItems.forEach(item => { %>    
+            <tr>    
+              <td class="img-td">    
+                <img src="<%= item.image || '/images/placeholder.png' %>" alt="<%= item.name %>" />    
+              </td>    
+              <td><%= item.name %></td>    
+              <td>₹ <%= item.price %></td>    
+              <td><%= item.quantity %></td>    
+              <td>₹ <%= item.total %></td>    
+              <td><%= item.sellerEmail || '—' %></td>    
+            </tr>    
+          <% }) %>    
+        </tbody>    
+      </table>    
+    <% } else { %>    
+      <p class="empty-msg">⚠ No items found in this order.</p>    
+    <% } %>    
+
+    <!-- Payment Button -->
+    <div class="action-btns">    
+      <form action="/payment" method="POST">    
+        <input type="hidden" name="orderId" value="<%= order._id %>">    
+        <input type="hidden" name="buyerName" value="<%= order.buyerName %>">    
+        <input type="hidden" name="buyerEmail" value="<%= order.buyerEmail %>">    
+        <input type="hidden" name="buyerAddress" value="<%= order.buyerAddress %>">    
+        <input type="hidden" name="totalAmount" value="<%= order.totalAmount %>">    
+        <input type="hidden" name="cartItems" value='<%- JSON.stringify(order.cartItems) %>'>    
+
+        <button type="submit" class="btn">💳 Proceed to Payment</button>    
+      </form>    
+    </div>    
+
+  <% } else { %>    
+    <p class="empty-msg">❌ Order not found.</p>    
+  <% } %>    
+</div>

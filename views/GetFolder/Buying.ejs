@@ -1,0 +1,82 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+
+<link rel="stylesheet" href="/css/buy.css" />
+
+<div class="buying-container">
+  <h1 class="title">🛒 Your Cart</h1>
+
+  <% if (cartItems && cartItems.length > 0) { %>
+
+    <% let totalPrice = 0; %>   <!-- ✅ Declare totalPrice outside loop -->
+
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Price (₹)</th>
+          <th>Quantity</th>
+          <th>Total (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% cartItems.forEach(item => { 
+             let qty = parseFloat(item.quantity);   // ✅ extract numeric part ("10kg" → 10)
+             if (isNaN(qty)) qty = 1;               // fallback if no number found
+             let itemTotal = item.price * qty;
+             totalPrice += itemTotal;
+        %>
+          <tr>
+            <td><img src="<%= item.image %>" width="80" alt="<%= item.name %>"></td>
+            <td><%= item.name %></td>
+            <td><%=item.email%></td>
+            <td><%= item.price %></td>
+            <td><%= item.quantity %></td>
+            <td><%= itemTotal.toLocaleString("en-IN") %></td> <!-- ✅ formatted -->
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="checkout-summary">
+      <h3>Total Amount: ₹ <%= totalPrice.toLocaleString("en-IN") %></h3>
+      <button class="checkout-btn" onclick="openOrderPopup()">Proceed to Checkout</button>
+    </div>
+
+    <!-- ==============================
+         Independent Order Popup
+    ================================== -->
+    <div class="order-popup-overlay" id="orderPopup">
+      <div class="order-popup-content">
+        <button class="order-close-btn" onclick="closeOrderPopup()">&times;</button>
+        <h3>Enter Your Details</h3>
+
+        <form id="orderForm" action="/order" method="POST">
+          <input type="text" name="buyerName" placeholder="Full Name" required>
+          <input type="email" name="buyerEmail" placeholder="Email" required>
+          <input type="text" name="buyerAddress" placeholder="Delivery Address" required>
+
+          <!-- Pass cart items + total -->
+          <input type="hidden" name="cartData" value='<%- JSON.stringify(cartItems) %>'>
+          <input type="hidden" name="totalAmount" value="<%= totalPrice %>">
+
+          <button type="submit" class="order-confirm-btn">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+
+  <% } else { %>
+    <p style="text-align:center; font-size:18px;">Your cart is empty 🛍</p>
+  <% } %>
+</div>
+
+<script>
+  function openOrderPopup() {
+    document.getElementById("orderPopup").style.display = "flex";
+  }
+  function closeOrderPopup() {
+    document.getElementById("orderPopup").style.display = "none";
+  }
+</script>

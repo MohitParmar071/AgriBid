@@ -1,0 +1,102 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/order-success.css" />
+
+<div class="order-success-container">
+  <div class="success-header">
+    <h1>📦 My Orders</h1>
+    <p>Here are all your recent orders</p>
+  </div>
+
+  <% if (orders && orders.length > 0) { %>
+    <% orders.forEach(order => { %>
+      <div class="order-details">
+        <br>
+        <p><strong>Order Id:</strong> <%= order._id %></p>
+        <p><strong>Total Amount:</strong> ₹ <%= order.totalAmount %></p>
+        <p class="status <%= order.status.toLowerCase() %>">
+          <strong>Status:</strong> <%= order.status %>
+        </p>
+      </div>
+
+      <% if (order.cartItems && order.cartItems.length > 0) { %>
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Price (₹)</th>
+              <th>Quantity</th>
+              <th>Total (₹)</th>
+              <th>Seller Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% order.cartItems.forEach(item => { %>
+              <tr>
+                <td class="img-td">
+                  <img src="<%= item.image || '/images/placeholder.png' %>" alt="<%= item.name %>" />
+                </td>
+                <td><%= item.name %></td>
+                <td>₹ <%= item.price %></td>
+                <td><%= item.quantity %></td>
+                <td>₹ <%= item.total %></td>
+                <td><%= item.sellerEmail || '—' %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } else { %>
+        <p class="empty-msg">No items found in this order.</p>
+      <% } %>
+
+      <!-- Buttons -->
+      <div style="text-align:center; margin: 25px 0;">
+        <a href="/" style="
+          display:inline-block;
+          width:180px;
+          padding:12px 0;
+          margin:5px;
+          font-size:16px;
+          font-weight:600;
+          text-align:center;
+          text-decoration:none;
+          background:linear-gradient(135deg,#43a047,#2e7d32);
+          color:white;
+          border-radius:8px;
+          box-shadow:0 4px 10px rgba(0,0,0,0.2);
+          transition:all .3s ease;
+        "
+        onmouseover="this.style.background='linear-gradient(135deg,#2e7d32,#1b5e20)'"
+        onmouseout="this.style.background='linear-gradient(135deg,#43a047,#2e7d32)'">
+          🏠 Continue
+        </a>
+
+        <form action="/cancelorder/<%= order._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit" style="
+            display:inline-block;
+            width:180px;
+            padding:12px 0;
+            margin:5px;
+            font-size:16px;
+            font-weight:600;
+            text-align:center;
+            background:linear-gradient(135deg,#e53935,#b71c1c);
+            color:white;
+            border:none;
+            border-radius:8px;
+            cursor:pointer;
+            box-shadow:0 4px 10px rgba(0,0,0,0.2);
+            transition:all .3s ease;
+          "
+          onmouseover="this.style.background='linear-gradient(135deg,#b71c1c,#7f0000)'"
+          onmouseout="this.style.background='linear-gradient(135deg,#e53935,#b71c1c)'">
+            ❌ Cancel
+          </button>
+        </form>
+      </div>
+      <hr />
+    <% }) %>
+  <% } else { %>
+    <p class="empty-msg">You have no orders yet.</p>
+  <% } %>
+</div>

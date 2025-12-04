@@ -1,0 +1,74 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+<title>Add New Crops - AgriBid</title>
+<link rel="stylesheet" href="/css/addNew.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<main class="main-content">
+  <div class="form-container">
+    <h2><i class="fa-solid fa-wheat-awn"></i> Add New Crop</h2>
+    <form method="POST" action="/EditCrops/<%=crop._id%>?_method=PATCH">
+
+      <!-- First rows (2 fields each) -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-seedling"></i> Crop Name</label>
+          <input type="text" value="<%=crop.name%>" name="crops[name]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-tags"></i> Price (₹ per unit)</label>
+          <input type="number" value="<%=crop.price%>" name="crops[price]" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-weight-scale"></i> Quantity</label>
+          <input type="text" value="<%=crop.quantity%>" name="crops[quantity]"  required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-user"></i> Seller Name</label>
+          <input type="text" value="<%=crop.seller%>" name="crops[seller]" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" value="<%=crop.email%>" name="crops[email]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-phone"></i> Contact</label>
+          <input type="tel" value="<%=crop.contact%>" name="crops[contact]" required>
+        </div>
+      </div>
+
+      <!-- Single row with 3 equal-width fields -->
+      <div class="form-row three-equal">
+        <div class="input-group">
+          <label><i class="fa-solid fa-location-dot"></i> Address</label>
+          <input value="<%=crop.city%>" name="crops[city]" required></input>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-image"></i> Image URL</label>
+          <input type="url" value="<%=crop.imageUrl%>" name="crops[imageUrl]" required>
+        </div>
+        <div class="input-group">
+          <label>UPI Number</label>
+          <div class="upi-icons">
+            <img src="https://imgs.search.brave.com/QCTiDPewkoui0Pdf-YaA_Zzt3AvKPb-HGuRtvVvRTuc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMi53/cC5jb20vOXRvNWdv/b2dsZS5jb20vd3At/Y29udGVudC91cGxv/YWRzL3NpdGVzLzQv/MjAyMi8wNC9nb29n/bGUtcGF5LWljb24t/Z3BheS5wbmc_c3Ns/PTE" alt="Paytm">
+            <img src="https://imgs.search.brave.com/oexMiAgAirzWjZZKv_SODdzoFmdKlnR1MgulYkrtjck/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91eHdp/bmcuY29tL3dwLWNv/bnRlbnQvdGhlbWVz/L3V4d2luZy9kb3du/bG9hZC9icmFuZHMt/YW5kLXNvY2lhbC1t/ZWRpYS9waG9uZXBl/LWljb24ucG5n" alt="PhonePe">
+            <img src="https://imgs.search.brave.com/FlJ58Uu9xgkHs7hnahaK6j8XJW1WV4xBvGtkFMGh7CE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF5/LWxoLmdvb2dsZXVz/ZXJjb250ZW50LmNv/bS9JV1U4SE0xdVF1/Vzh3VnJwNlhweU9P/Slh2Yl8xdERQVURB/T2Zrcmw4M1JaUEc5/V3czZENZOVgxQVY2/VDFhdFN2Z1hjPXcy/NDAtaDQ4MC1ydw" alt="Google Pay">
+            <img src="https://imgs.search.brave.com/ZjB09CKJg5qt6y3EQZAiM3ihlfkL2_0LM7cn-SCRfjY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni81NTYzLzU1NjM2/MzgucG5nP3NlbXQ9/YWlzX2h5YnJpZA" alt="Bank">
+          </div>
+          <input type="text" value="<%=crop.upi%>" name="crops[upi]" required>
+        </div>
+      </div>
+
+      <button type="submit"><i class="fa-solid fa-plus"></i> EDit Crop</button>
+    </form>
+  </div>
+</main>
+
+        <%- include("../includes/webfooter.ejs") %>

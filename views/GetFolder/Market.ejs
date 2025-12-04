@@ -1,0 +1,160 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/market.css" />
+
+<main class="agri-market">
+  <header class="agri-market__hero">
+    <div class="agri-market__hero-inner">
+      <div class="hero-left">
+        <h1 class="hero-title">AgriBid Market</h1>
+        <p class="hero-sub">Discover bulk crops — only listings with <strong>more than 100 kg</strong> available. Fresh, local, and trusted sellers.</p>
+        <div class="hero-ctas">
+          <a href="/selling" class="btn hero-btn">Sell Your Crop</a>
+          <a href="#catalog" class="btn ghost">Browse Catalog</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <img src="https://imgs.search.brave.com/7ZAnOlQ-WRqR_LUGtMNPZV7s4zTIhf4JgQZCLb3UZTs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA3LzM5LzQ5Lzkx/LzM2MF9GXzczOTQ5/OTE4MF9sUkhuQjU2/alE3cngxeXRIUmRT/MzBTQXQ1aVVFYWVr/Qy5qcGc" alt="fresh crops" class="hero-illustration">
+      </div>
+    </div>
+  </header>
+
+  <section id="catalog" class="agri-market__catalog">
+    <div class="catalog-controls">
+      <form class="search-form" action="/market" method="GET">
+        <input name="q" value="<%= query || '' %>" placeholder="Search crops, city or seller..." aria-label="search crops" />
+        <button class="search-btn" type="submit">🔍</button>
+      </form>
+
+      <div class="filter-row">
+        <label for="sort" class="sr-only">Sort</label>
+        <select id="sort" name="sort" onchange="location = this.value;">
+          <option value="/market?sort=newest" <% if(sort==='newest') { %>selected<% } %>>Newest</option>
+          <option value="/market?sort=price-asc" <% if(sort==='price-asc') { %>selected<% } %>>Price: Low → High</option>
+          <option value="/market?sort=price-desc" <% if(sort==='price-desc') { %>selected<% } %>>Price: High → Low</option>
+          <option value="/market?sort=qty-desc" <% if(sort==='qty-desc') { %>selected<% } %>>Quantity: High → Low</option>
+        </select>
+        <div class="catalog-stats"><strong><%= crops.length %></strong> listings found</div>
+      </div>
+    </div>
+
+    <% if (!crops || crops.length === 0) { %>
+      <div class="empty-state">
+        <h3>No bulk crops found</h3>
+        <p>Try adjusting search or check back later — new listings arrive daily.</p>
+        <a href="/sell" class="btn primary">Be the first to sell</a>
+      </div>
+    <% } else { %>
+
+      <div class="catalog-grid">
+        <% crops.forEach(function(crop) { 
+            const qtyNum = parseInt(String(crop.quantity).replace(/\D/g,''),10) || 0;
+        %>
+          <article class="crop-card" data-id="<%= crop._id %>">
+            <div class="card-media">
+              <img alt="<%= crop.name %>" src="<%= crop.imageUrl || '/images/placeholder.png' %>">
+              <div class="badge">Bulk • <%= qtyNum %> kg</div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="crop-name"><%= crop.name %></h3>
+              <p class="crop-meta">
+                <span class="price">₹ <%= crop.price %> / kg</span>
+                <span class="dot">•</span>
+                <span class="city"><%= crop.city %></span>
+              </p>
+
+              <p class="seller">Seller: <strong><%= crop.seller %></strong> — <span class="email"><%= crop.email %></span></p>
+
+              <div class="card-bottom">
+                <div class="left">
+                  <div class="qty">Available: <strong><%= crop.quantity %></strong></div>
+                  <div class="upi">UPI: <%= crop.upi || '—' %></div>
+                </div>
+
+                <div class="actions">
+                  <a class="btn small" href="/crop/<%= crop._id %>">View</a>
+
+                  <form action="/cart/add/<%= crop._id %>" method="POST" class="inline-form">
+                    <input type="hidden" name="qty" value="50" />
+                    <button class="btn primary small" type="submit">Add to Cart</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+      </div>
+
+      <!-- Pagination stub (optional) -->
+      <div class="catalog-footer">
+        <a href="#" class="link muted">Load more</a>
+      </div>
+    <% } %>
+  </section>
+
+
+  <!-- Quick view modal (JS controlled) -->
+  <div id="marketModal" class="agri-market__modal" aria-hidden="true">
+    <div class="modal-inner">
+      <button class="modal-close" onclick="closeMarketModal()">✕</button>
+      <div class="modal-grid">
+        <div class="modal-image"><img id="modalImage" src="/images/placeholder.png" alt=""></div>
+        <div class="modal-info">
+          <h3 id="modalTitle">Crop name</h3>
+          <p id="modalPrice">₹ 0 / kg</p>
+          <p id="modalQty">Quantity: 0 kg</p>
+          <p id="modalSeller">Seller: —</p>
+          <p id="modalCity">City: —</p>
+          <div class="modal-actions">
+            <a id="modalView" class="btn" href="#">View Full</a>
+            <form id="modalCartForm" action="#" method="POST" style="display:inline;">
+              <button class="btn primary" type="submit">Add to Cart</button>
+            </form>
+          </div>
+          <div id="modalDesc" class="modal-desc">Quick details...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // Quick view activation
+  document.querySelectorAll('.crop-card .card-media img').forEach(img => {
+    img.addEventListener('click', e => {
+      const card = e.target.closest('.crop-card');
+      const id = card.dataset.id;
+      // extract data from DOM quickly (server side would be better)
+      const title = card.querySelector('.crop-name').innerText;
+      const price = card.querySelector('.price').innerText;
+      const qty = card.querySelector('.qty strong').innerText;
+      const seller = card.querySelector('.seller strong').innerText;
+      const city = card.querySelector('.city').innerText;
+      const imgSrc = card.querySelector('.card-media img').src;
+
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalQty').innerText = 'Quantity: ' + qty;
+      document.getElementById('modalSeller').innerText = 'Seller: ' + seller;
+      document.getElementById('modalCity').innerText = 'City: ' + city;
+      document.getElementById('modalImage').src = imgSrc;
+      document.getElementById('modalView').href = '/crop/' + id;
+      document.getElementById('modalCartForm').action = '/cart/add/' + id;
+
+      document.getElementById('marketModal').setAttribute('aria-hidden','false');
+      document.getElementById('marketModal').classList.add('open');
+    });
+  });
+
+  function closeMarketModal(){
+    const m = document.getElementById('marketModal');
+    m.setAttribute('aria-hidden','true');
+    m.classList.remove('open');
+  }
+
+  // close on escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMarketModal();
+  });
+</script>

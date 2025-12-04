@@ -1,0 +1,83 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+<title>Add New Crops - AgriBid</title>
+<link rel="stylesheet" href="/css/addNew.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<main class="main-content">
+  <div class="form-container">
+    <h2><i class="fa-solid fa-wheat-awn"></i> Add New Crop</h2>
+    <form method="POST" action="/crops">
+
+      <!-- First row: Crop Name + Type -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-seedling"></i> Crop Name</label>
+          <input type="text" placeholder="Enter crop name" name="crops[name]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-list"></i> Type</label>
+          <select name="crops[Type]" required>
+            <option value="">Select type</option>
+            <option value="buy">buy</option>
+            <option value="bid">bid</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Second row: Price + Quantity -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-tags"></i> Price (₹ per unit)</label>
+          <input type="number" placeholder="Enter price" name="crops[price]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-weight-scale"></i> Quantity</label>
+          <input type="text" placeholder="e.g. 50kg" name="crops[quantity]"  required>
+        </div>
+      </div>
+
+      <!-- Third row: Seller + Email -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-user"></i> Seller Name</label>
+          <input type="text" placeholder="Enter seller name" name="crops[seller]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" placeholder="Enter email" name="crops[email]" required>
+        </div>
+      </div>
+
+      <!-- Fourth row: Contact + Address -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-phone"></i> Contact</label>
+          <input type="tel" placeholder="Enter contact number" name="crops[contact]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-location-dot"></i> Address</label>
+          <input type="text" placeholder="Enter seller address" name="crops[city]" required>
+        </div>
+      </div>
+              
+
+        <div class="form-row two-equal">
+              <div class="input-group">
+              <label><i class="fa-solid fa-image"></i> Image URL</label>
+                <input type="text" id="imageUrl" placeholder="Enter image link" name="crops[imageUrl]"/>
+              </div>
+
+            <div class="input-group">
+              <label for="upi">🏦 UPI Number</label>
+            <input type="text" id="upi" placeholder="Enter UPI number" name="crop[upi]" />
+          </div>
+        </div>
+
+      <button type="submit"><i class="fa-solid fa-plus"></i> Add Crop</button>
+    </form>
+  </div>
+</main>
+
+<%- include("../includes/webfooter.ejs") %>

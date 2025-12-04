@@ -1,0 +1,120 @@
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="css/home.css">
+
+
+<!-- Background Blur -->
+<div id="overlay"></div>
+
+<!-- Background Blur -->
+<div id="overlay"></div>
+
+<!-- Hero -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Connecting Farmers to the Future</h1>
+      <p>Sell your crops. Get weather reports. Grow better. Live smarter.</p>
+      <a  href="/crops" id="btn-buy" class="btn-button">Buying</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+      <a  href="/selling" id="btn-sell" class="btn-button">Selling</a>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <div class="about-content">
+      <div class="about-text">
+        <h2>About AgriBid</h2>
+        <p>
+          AgriBid is a one-stop platform for farmers to sell crops, get live weather alerts, read expert advice,
+          and connect with a community of modern agriculturists. We help farmers make better decisions,
+          earn better profits, and build a sustainable future.
+        </p>
+      </div>
+      <img src="https://imgs.search.brave.com/OSJ9wvmCxyx8gdyBhqpjmvoLuo5_sr9_Szq36JWvVQo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzUzLzk3LzE2/LzM2MF9GXzU1Mzk3/MTYzM182QmhnWFN2/VDRZQ1JKOUZudmFr/UnRjOVdBS2pmNE5C/ci5qcGc" alt="About AgriBid" />
+    </div>
+  </section>
+
+  <!-- Why Us -->
+  <section class="why-us">
+    <h2>Why Choose AgriBid?</h2>
+    <div class="card-container">
+      <div class="card">
+        <a href="/market">
+        <img src="https://imgs.search.brave.com/oGpcpuWCQYnhNBG7E2DChjby3Vsl5g6SXzAOV3f0wJY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNjY2/MTM3MjY2L3Bob3Rv/L3NhY2tzLWZ1bGwt/b2YtZ3JhaW5zLmpw/Zz9zPTYxMng2MTIm/dz0wJms9MjAmYz1U/RzJ2WkhtYjhqRnZ1/NFVlMmg1QzlrcjdY/aGVCUkU5UF9Samlv/Q0tEV3lRPQ" alt="">
+        <h3>Direct Market Access</h3>
+        <p>Nationwide buyers can bid directly on your crops. No middlemen, better prices.</p>
+        </a>
+      </div>
+      <div class="card">
+        <a href="/weather">
+        <img src="https://imgs.search.brave.com/fLbcB6rzFcQMyrNn5idtBwTKZWpj_x50SKoEcy4zJIg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNDc1/Njk2NzQyL3ZlY3Rv/ci92ZWN0b3Qtd2Vh/dGhlci13aWRnZXQt/Zm9yLXNtYXJ0cGhv/bmUuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPWxJYVkwd2J6/MHR6d016SVlDUkZO/V1llSGx0NjljYnRT/d0dyZU16d0llQ2s9" alt="">
+        <h3>Weather Intelligence</h3>
+        <p>Check Real-time weather updates to protect your crops from disaster.</p>
+        </a>
+      </div>
+      <div class="card">
+         <a href="/guidance">
+        <img src="https://imgs.search.brave.com/jgtEZgZCMUPSwI7lpsLAi27vYcMCPLrF1MevdoU9NDY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YWxtYW5hYy5jb20v/c2l0ZXMvZGVmYXVs/dC9maWxlcy9zdHls/ZXMvc3F1YXJlX3Ro/dW1ibmFpbC9wdWJs/aWMvaW1hZ2Vfbm9k/ZXMvbG92YWdlLWhl/cmItaGFydmVzdGlu/Zy1zaHV0dGVyc3Rv/Y2tfMjE2NDE2MTc5/Ny5qcGc_aXRvaz15/T1BaNUVNbw" alt="">
+        <h3>Farming Guides</h3>
+        <p>Weekly expert advice, tips and news to grow smarter.</p>
+         </a>
+      </div>
+    </div>
+  </section>
+
+<!-- Gallery -->
+
+<section class="gallery">
+  <h2>Our Farm Gallery</h2>
+  <div class="gallery-wrapper">
+
+    <button class="scroll-btn left" onclick="scrollGallery(-1)">&#10094;</button>
+    <div class="gallery-scroll" id="galleryScroll">
+      <img src="https://krishijagran.com/media/8924/horticulture.jpg" />
+      <img src="https://ownafarm.in/wp-content/uploads/2022/12/Farm-Lnad-Type-2.png" />
+      <img src="https://tse4.mm.bing.net/th/id/OIP.Y4VlEZosbwVsghBufz3d8wHaEK?pid=Api&P=0&h=180" />
+      <img src="https://imgs.search.brave.com/Ib9vEn1MCdqfM31ho7a16ZjkqVHwBUHcCjasUBHrdq8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTcx/ODUxNjU1NC9waG90/by9mdWxsLWZyYW1l/LW9mLWFzc29ydG1l/bnQtb2YtaGVhbHRo/eS1hbmQtZnJlc2gt/ZnJ1aXRzLndlYnA_/YT0xJmI9MSZzPTYx/Mng2MTImdz0wJms9/MjAmYz1SNWtSYXJD/aUpqTG16S0lFdl84/TkVFc2NNZGVzWkZX/d1lxeG5EeUo3RTJz/PQ" />
+      <img src="https://imgs.search.brave.com/21NolNj9AtHic5VNiYhVfAuW0mK92713aWgK0eORReM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMjE1/NjE3NDczOC9waG90/by9jb3JuLWdyYWlu/cy1pbi10aGUtaGFu/ZHMtb2YtYS1zdWNj/ZXNzZnVsLWZhcm1l/ci1pbi1hLWJhY2tn/cm91bmQtZ3JlZW4t/Y29ybi1maWVsZC5q/cGc_Yj0xJnM9NjEy/eDYxMiZ3PTAmaz0y/MCZjPUZPcENGdmp3/cFZ4Z0tuNHFkeDZF/WmpvZGRUYXdaSFpt/ZHFXWS1mTDZxbXM9">
+      <img src="https://imgs.search.brave.com/PM8DipFbgB0mXjhK8EZw6UJXEUmWTHjpr0MCoxQ59LU/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9lb3Mu/Y29tL3dwLWNvbnRl/bnQvdXBsb2Fkcy8y/MDIwLzA5LzFfMTky/MCVEMSU4NTYwMC1l/MTY3MDUwOTUyNzcz/Mi5qcGcud2VicA">
+      <img src="https://imgs.search.brave.com/Q_PaU__lTI7fixwKd-Ov0Q9JHG6X0t1c95Jr3ODZzBc/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2FiL1BhdGF0ZXMu/anBn">
+      <img src="https://imgs.search.brave.com/s2BYJEeTecxvbf5wt3r3PBTqZHZMSLgcU016EmONaRM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTI1/MTI2ODEzMS9waG90/by9zZW5pb3ItbWFu/LXdpdGgtYnVuY2gt/b2YtZnJlc2hseS1o/YXJ2ZXN0ZWQtY2Fy/cm90cy5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9Ti14T2Np/VkZJTlliUERmMEZ6/VjF0and0Zm5jN2dZ/RU1XMlRwVzhoM2JD/Zz0">
+      <img src="        https://tse2.mm.bing.net/th/id/OIP.XmI2HXxPES-qJ3c_ll5NqgHaEK?pid=Api&P=0&h=180">
+ 
+    </div>
+
+    <button class="scroll-btn right" onclick="scrollGallery(1)">&#10095;</button>
+
+  </div>
+</section>
+
+
+  <!-- Blog -->
+  <section class="blog">
+    <h2>Latest Farming Articles</h2>
+    <div class="blog-posts">
+      <div class="post">
+        <h3>How to Prepare Soil Before Sowing</h3>
+        <p>Enrich your soil organically and scientifically for maximum yield.</p>
+        <a href="#">Read More</a>
+      </div>
+      <div class="post">
+        <h3>5 Common Crop Diseases and Prevention</h3>
+        <p>Learn how to prevent diseases without harmful chemicals.</p>
+        <a href="#">Read More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe">
+    <h2>Subscribe to Our Newsletter</h2>
+    <p>Get weekly updates, tips, and AgriBid news directly in your inbox.</p>
+    <form>
+      <input type="email" placeholder="Enter your email" required />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+        <%- include("../includes/webfooter.ejs") %>
+
+
+  <script src="js/home.js"></script>

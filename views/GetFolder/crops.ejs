@@ -1,0 +1,124 @@
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+
+<link rel="stylesheet" href="/css/crops.css" />
+
+<section class="market-section">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 Search crops like Wheat, Mango, Tomato..." onkeyup="filterCrops()" />
+  </div>
+
+  <div class="market-grid" id="cropList">
+    <% for(crop of crops) { %>
+      <% if (crop.email != user.email) { %>
+      <div class="market-card">
+        <a href="/showcrops/<%=crop._id%>">
+          <img src="<%=crop.imageUrl%>" alt="Image">
+          <h3><%=crop.name%></h3>
+          <p class="price"><strong>Price : </strong><%=crop.price%> / Kg</p>
+          <p class="quantity"><strong>Quantity : </strong><%=crop.quantity%></p>
+          <p class="seller"><strong>Seller : </strong><%=crop.seller%></p>
+          <p class="contact"><strong>Contact : </strong>+91 <%=crop.contact%></p>
+          <p class="city"><strong>Address : </strong><%=crop.city%></p>
+        </a>
+
+        <!-- Add To Cart button -->
+        <button 
+          class="buy-btn" 
+          data-id="<%= crop._id %>" 
+          data-name="<%= crop.name %>"
+          data-price="<%= crop.price %>"
+          data-quantity="<%= crop.quantity %>"
+          data-seller="<%= crop.seller %>"
+          data-email="<%= crop.email %>"
+          data-contact="<%= crop.contact %>"
+          data-upi="<%= crop.upi %>"
+          data-image="<%= crop.imageUrl %>"   <
+        >Add To Cart</button>        
+      </div>
+      <% } %>
+    <% } %>
+  </div>
+</section>
+
+<!-- Hidden form for checkout -->
+<form id="checkoutForm" action="/buying" method="POST">
+  <input type="hidden" id="cartData" name="cartData" />
+</form>
+
+<script>
+  function filterCrops() {
+    const input = document.getElementById("searchInput").value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".market-card");
+    cards.forEach(card => {
+      const cropName = card.querySelector("h3").textContent.toLowerCase();
+      card.style.display = cropName.includes(input) ? "block" : "none";
+    });
+  }
+
+  // Logged in user
+  const currentUser = "<%= user.email %>";
+
+  // Local storage key per user
+  let cartKey = "cartItems_" + currentUser;
+  let cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  function updateCartCount() {
+    document.getElementById("cartCount").innerText = cartItems.length || 0;
+  }
+
+  function updateButtonState(button, cropId) {
+    const inCart = cartItems.find(item => item.id === cropId);
+    if (inCart) {
+      button.innerText = "REMOVE From Cart";
+      button.style.background = "#e53935"; // red
+    } else {
+      button.innerText = "ADD To Cart";
+      button.style.background = "#43a047"; // green
+    }
+  }
+
+  // Initialize buttons
+  updateCartCount();
+  document.querySelectorAll(".buy-btn").forEach(button => {
+    const cropId = button.dataset.id;
+    updateButtonState(button, cropId);
+
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
+
+      const cropData = {
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: this.dataset.price,
+        quantity: this.dataset.quantity,
+        seller: this.dataset.seller,
+        email: this.dataset.email,
+        contact: this.dataset.contact,
+        upi: this.dataset.upi,
+        image: this.dataset.image   
+      };
+
+      let existing = cartItems.find(item => item.id === cropId);
+      if (existing) {
+        // Remove
+        cartItems = cartItems.filter(item => item.id !== cropId);
+      } else {
+        // Add
+        cartItems.push(cropData);
+      }
+
+      // Save
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+      updateCartCount();
+      updateButtonState(this, cropId);
+    });
+  });
+
+  // Submit cart on cart icon click
+  document.querySelector(".cart-container").addEventListener("click", function () {
+    document.getElementById("cartData").value = JSON.stringify(cartItems);
+    console.log("Sending cart data:", cartItems); // Debug
+    document.getElementById("checkoutForm").submit();
+  });
+</script>

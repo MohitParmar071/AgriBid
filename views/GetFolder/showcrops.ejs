@@ -1,0 +1,35 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/showcrops.css" />
+<link rel="stylesheet" href="/css/deletePopup.css" />
+
+<main class="crop-details-wrapper">
+    <div class="crop-card">
+        
+        <!-- Image Section -->
+        <div class="crop-image">
+            <img src="<%=crops.imageUrl%>" alt="Crop Image">
+        </div>
+
+        <!-- Details Section -->
+        <div class="crop-info">
+            <h1 class="crop-name"><%=crops.name%></h1>
+            <p><strong>Price:</strong> <%=crops.price%> / KG</p>
+            <p><strong>Quantity:</strong> <%=crops.quantity%></p>
+            <p><strong>Seller:</strong> <%=crops.seller%></p>
+            <p><strong>Email:</strong> <%=crops.email%></p>
+            <p><strong>Contact:</strong> +91 <%=crops.contact%></p>
+            <p><strong>Address:</strong> <%=crops.city%></p>
+            <p><strong>UPI ID:</strong> <%=crops.upi%></p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="action-buttons">
+            <a href="/buying/<%=crops._id%>"><button class="btn buy">Buy</button></a>
+            <a href="/crops"><button class="btn back">Back</button></a>
+        </div>
+    </div>
+</main>
+
+<%- include("../includes/webfooter.ejs") %>
+

@@ -1,0 +1,45 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/payment.css" />
+
+<div class="payment-container">
+  <h1>💳 Payment Checkout</h1>
+  <p class="subtitle">Complete your secure payment with AgriBid</p>
+
+  <div class="order-summary">
+    <h2>🛍 Order Summary</h2>
+    <p><strong>Order ID:</strong> <%= orderId %></p>
+    <p><strong>Name:</strong> <%= buyerName %></p>
+    <p><strong>Email:</strong> <%= buyerEmail %></p>
+    <p><strong>Address:</strong> <%= buyerAddress %></p>
+    <p><strong>Total Amount:</strong> <span class="highlight">₹ <%= totalAmount %></span></p>
+  </div>
+
+  <table class="order-table">
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Price (₹)</th>
+        <th>Qty</th>
+        <th>Total (₹)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% cartItems.forEach(item => { %>
+        <tr>
+          <td><%= item.name %></td>
+          <td>₹ <%= item.price %></td>
+          <td><%= item.quantity %></td>
+          <td>₹ <%= item.total %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <form action="/payment/confirm" method="POST" class="payment-form">
+    <input type="hidden" name="orderId" value="<%= orderId %>">
+    <input type="hidden" name="buyerEmail" value="<%= buyerEmail %>">
+    <input type="hidden" name="cartItems" value='<%- JSON.stringify(cartItems) %>'>
+
+    <button type="submit" class="pay-btn">✅ Confirm & Pay</button>
+  </form>
+</div>

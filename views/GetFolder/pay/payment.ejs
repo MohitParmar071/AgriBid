@@ -1,0 +1,354 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<style>
+  body {
+    background: #f3f4f6;
+  }
+  .payment-gateway-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    min-height: 500px;
+  }
+  .payment-sidebar {
+    width: 280px;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
+    padding: 20px 0;
+  }
+  .merchant-info {
+    padding: 0 24px 20px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+  }
+  .merchant-logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: #16a34a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .payment-amount-display {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .order-ref {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  .pm-method {
+    padding: 16px 24px;
+    border-left: 4px solid transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+  }
+  .pm-method i {
+    font-size: 18px;
+    width: 24px;
+  }
+  .pm-method:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+  }
+  .pm-method.active {
+    background: #fff;
+    border-left-color: #16a34a;
+    color: #16a34a;
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.02);
+  }
+  .payment-content {
+    flex: 1;
+    padding: 40px;
+    background: #fff;
+    position: relative;
+  }
+  .pm-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .pm-pane.active {
+    display: block;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .pm-pane h3 {
+    margin-bottom: 24px;
+    font-size: 20px;
+    color: #1e293b;
+    font-weight: 700;
+  }
+  .input-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 6px;
+  }
+  .custom-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+    background: #f8fafc;
+  }
+  .custom-input:focus {
+    border-color: #16a34a;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .pay-btn {
+    width: 100%;
+    padding: 14px;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .pay-btn:hover {
+    background: #15803d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+  }
+  .pay-btn:active {
+    transform: translateY(0);
+  }
+  .secure-icon {
+    font-size: 12px;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+  }
+  
+  /* Processing Overlay */
+  .processing-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .processing-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .spinner-circle {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #16a34a;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .processing-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+  .processing-sub {
+    font-size: 14px;
+    color: #64748b;
+    margin-top: 8px;
+  }
+</style>
+
+<div class="container">
+  <div class="payment-gateway-wrapper animate-slide-up">
+    
+    <!-- Processing Overlay -->
+    <div class="processing-overlay" id="processingOverlay">
+      <div class="spinner-circle"></div>
+      <div class="processing-text">Processing your payment...</div>
+      <div class="processing-sub">Please do not refresh the page or press back.</div>
+    </div>
+
+    <!-- Hidden form that will actually submit -->
+    <form id="actualPaymentForm" action="/payment/confirm" method="POST" style="display:none;">
+      <input type="hidden" name="orderId" value="<%= orderId %>">
+      <input type="hidden" name="buyerEmail" value="<%= buyerEmail %>">
+      <input type="hidden" name="cartItems" value='<%- JSON.stringify(cartItems) %>'>
+    </form>
+
+    <!-- Sidebar -->
+    <div class="payment-sidebar">
+      <div class="merchant-info">
+        <div class="merchant-logo"><i class="fa-solid fa-leaf"></i> AgriBid</div>
+        <div class="order-ref">Order ID: <%= orderId %></div>
+        <div class="payment-amount-display">₹<%= Number(totalAmount).toLocaleString('en-IN') %></div>
+      </div>
+      
+      <div class="payment-methods">
+        <div class="pm-method active" onclick="switchTab('card', this)">
+          <i class="fa-regular fa-credit-card"></i> Card
+        </div>
+        <div class="pm-method" onclick="switchTab('upi', this)">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/UPI-Logo-vector.svg" alt="UPI" style="width:24px;"> UPI
+        </div>
+        <div class="pm-method" onclick="switchTab('netbanking', this)">
+          <i class="fa-solid fa-building-columns"></i> Net Banking
+        </div>
+        <div class="pm-method" onclick="switchTab('cod', this)">
+          <i class="fa-solid fa-money-bill-wave"></i> Cash on Delivery
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="payment-content">
+      
+      <!-- Card Pane -->
+      <div class="pm-pane active" id="pane-card">
+        <h3>Pay with Credit / Debit Card</h3>
+        <label class="input-label">Card Number</label>
+        <input type="text" class="custom-input" placeholder="0000 0000 0000 0000" maxlength="19" oninput="this.value = this.value.replace(/[^0-9\s]/g, '').replace(/(\d{4})(?=\d)/g, '$1 ')">
+        
+        <div class="two-col">
+          <div>
+            <label class="input-label">Expiry (MM/YY)</label>
+            <input type="text" class="custom-input" placeholder="MM/YY" maxlength="5" oninput="this.value = this.value.replace(/[^0-9\/]/g, '').replace(/^(\d{2})(\d)/, '$1/$2')">
+          </div>
+          <div>
+            <label class="input-label">CVV</label>
+            <input type="password" class="custom-input" placeholder="123" maxlength="3" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          </div>
+        </div>
+        
+        <label class="input-label">Name on Card</label>
+        <input type="text" class="custom-input" placeholder="e.g. Jeet Rupareliya">
+        
+        <button class="pay-btn" onclick="startProcessing()">Pay ₹<%= Number(totalAmount).toLocaleString('en-IN') %></button>
+      </div>
+
+      <!-- UPI Pane -->
+      <div class="pm-pane" id="pane-upi">
+        <h3>Pay via UPI</h3>
+        <p style="color: #64748b; font-size: 14px; margin-bottom: 20px;">Enter your Virtual Payment Address (VPA) or UPI ID to receive a payment request.</p>
+        
+        <label class="input-label">UPI ID / VPA</label>
+        <input type="text" class="custom-input" placeholder="username@upi" required>
+        
+        <button class="pay-btn" onclick="startProcessing()">Verify & Pay ₹<%= Number(totalAmount).toLocaleString('en-IN') %></button>
+        
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="font-size: 12px; color: #94a3b8; font-weight: 600; text-transform: uppercase;">Supported Apps</p>
+          <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px; font-size: 24px; color: #cbd5e1;">
+            <i class="fa-brands fa-google-pay" style="color: #4285f4;"></i>
+            <span style="font-weight:bold; color:#0e52a5;">Paytm</span>
+            <span style="font-weight:bold; color:#f37021;">PhonePe</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NetBanking Pane -->
+      <div class="pm-pane" id="pane-netbanking">
+        <h3>Net Banking</h3>
+        <label class="input-label">Select Your Bank</label>
+        <select class="custom-input" style="appearance: auto;">
+          <option value="" disabled selected>Choose a Bank...</option>
+          <option value="sbi">State Bank of India</option>
+          <option value="hdfc">HDFC Bank</option>
+          <option value="icici">ICICI Bank</option>
+          <option value="axis">Axis Bank</option>
+          <option value="pnb">Punjab National Bank</option>
+          <option value="bob">Bank of Baroda</option>
+        </select>
+        
+        <button class="pay-btn" onclick="startProcessing()">Proceed to Bank portal</button>
+      </div>
+
+      <!-- Cash on Delivery Pane -->
+      <div class="pm-pane" id="pane-cod">
+        <h3>Cash on Delivery</h3>
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 20px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
+          <i class="fa-solid fa-truck-fast" style="font-size: 32px; color: #22c55e; margin-bottom: 12px;"></i>
+          <p style="color: #166534; font-weight: 600;">Pay with cash when your harvest arrives at your doorstep.</p>
+        </div>
+        
+        <button class="pay-btn" style="background: #2563eb;" onclick="startProcessing()">Confirm Cash on Delivery</button>
+      </div>
+
+      <!-- Global Secure Note inside content area -->
+      <div class="secure-icon">
+        <i class="fa-solid fa-lock" style="color: #10b981;"></i> 100% Secure Transaction by AgriBid Gateway
+      </div>
+    
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId, element) {
+    // Hide all panes
+    document.querySelectorAll('.pm-pane').forEach(pane => {
+      pane.classList.remove('active');
+    });
+    // Remove active class from all methods
+    document.querySelectorAll('.pm-method').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    // Show correct pane & set active class
+    document.getElementById('pane-' + tabId).classList.add('active');
+    element.classList.add('active');
+  }
+
+  function startProcessing() {
+    // Show overlay
+    document.getElementById('processingOverlay').classList.add('active');
+    
+    // Disable interaction
+    document.body.style.pointerEvents = 'none';
+
+    // Simulate network latency & payment gateway response (2.5 seconds)
+    setTimeout(() => {
+      document.body.style.pointerEvents = 'all';
+      document.getElementById('actualPaymentForm').submit();
+    }, 2500);
+  }
+</script>

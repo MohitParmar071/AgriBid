@@ -1,0 +1,232 @@
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="css/home.css">
+
+<!-- Background Blur (if any) -->
+<div id="overlay"></div>
+
+<style>
+/* Additional specific styling for schemes page */
+.page-header {
+  background: linear-gradient(135deg, #1b5e20, #4CAF50);
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+  border-radius: 0 0 40px 40px;
+  margin-bottom: 50px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.page-header h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.scheme-detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.scheme-detail-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  border-left: 8px solid #4CAF50;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  transition: transform 0.3s ease;
+}
+
+.scheme-detail-card:target {
+  border-color: #ff9800;
+  animation: pulse 2s;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(255, 152, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 152, 0, 0); }
+}
+
+.scheme-detail-icon {
+  width: 80px;
+  height: 80px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.scheme-detail-content h2 {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 2rem;
+  color: #2e7d32;
+}
+
+.scheme-detail-content h4 {
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 5px;
+  display: inline-block;
+}
+
+.scheme-detail-content p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.scheme-detail-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.scheme-detail-content ul li {
+  margin-bottom: 10px;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: #444;
+}
+
+.scheme-detail-content ul li i {
+  color: #4CAF50;
+  margin-top: 4px;
+}
+
+.apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ff5722;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255,87,34,0.3);
+}
+
+.apply-btn:hover {
+  background: #e64a19;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255,87,34,0.4);
+}
+
+@media (max-width: 768px) {
+  .scheme-detail-card {
+    flex-direction: column;
+    padding: 25px;
+  }
+}
+</style>
+
+<div class="page-header">
+  <h1>Government Schemes & Subsidies</h1>
+  <p>Find full details on financial support, insurance, and equipment subsidies introduced by the Agriculture Department to empower farmers.</p>
+</div>
+
+<div class="scheme-detail-container">
+
+  <!-- Scheme 1: PM-Kisan -->
+  <div class="scheme-detail-card" id="pm-kisan">
+    <div class="scheme-detail-icon"><i class="fa-solid fa-seedling"></i></div>
+    <div class="scheme-detail-content">
+      <h2>Pradhan Mantri Kisan Samman Nidhi (PM-KISAN)</h2>
+      <p>The PM-Kisan Samman Nidhi is a central sector scheme with 100% funding from the Government of India. The scheme aims to supplement the financial needs of the Small and Marginal Farmers (SMFs) in procuring various inputs to ensure proper crop health and appropriate yields.</p>
+      
+      <h4>Key Benefits</h4>
+      <ul>
+        <li><i class="fa-solid fa-check-circle"></i> Financial benefit of ₹6,000 per year per eligible farmer family.</li>
+        <li><i class="fa-solid fa-check-circle"></i> Amount is transferred directly into the bank accounts of beneficiaries through Direct Benefit Transfer (DBT).</li>
+        <li><i class="fa-solid fa-check-circle"></i> Paid in three equal installments of ₹2,000 every 4 months.</li>
+      </ul>
+
+      <h4>Eligibility</h4>
+      <ul>
+        <li><i class="fa-solid fa-user-check"></i> All landholding farmers' families (husband, wife, and minor children) are eligible.</li>
+        <li><i class="fa-solid fa-ban" style="color:#e53935"></i> Not applicable to institutional landholders, those holding constitutional posts, and tax-paying professionals.</li>
+      </ul>
+
+      <a href="https://pmkisan.gov.in/" target="_blank" class="apply-btn">Visit Official Portal <i class="fa-solid fa-external-link-alt"></i></a>
+    </div>
+  </div>
+
+  <!-- Scheme 2: Fasal Bima Yojana -->
+  <div class="scheme-detail-card" id="fasal-bima">
+    <div class="scheme-detail-icon"><i class="fa-solid fa-umbrella"></i></div>
+    <div class="scheme-detail-content">
+      <h2>Pradhan Mantri Fasal Bima Yojana (PMFBY)</h2>
+      <p>PMFBY aims to provide insurance coverage and financial support to farmers in the event of failure of any of the notified crops as a result of natural calamities, pests & diseases.</p>
+      
+      <h4>Key Benefits</h4>
+      <ul>
+        <li><i class="fa-solid fa-check-circle"></i> Comprehensive risk coverage from pre-sowing to post-harvest losses.</li>
+        <li><i class="fa-solid fa-check-circle"></i> Very low premium rates: 2% for Kharif crops, 1.5% for Rabi crops, and 5% for commercial/horticultural crops.</li>
+        <li><i class="fa-solid fa-check-circle"></i> Encourages farmers to adopt innovative and modern agricultural practices.</li>
+      </ul>
+
+      <h4>Eligibility</h4>
+      <ul>
+        <li><i class="fa-solid fa-user-check"></i> All farmers growing notified crops in a notified area, including tenant farmers and sharecroppers.</li>
+        <li><i class="fa-solid fa-user-check"></i> Mandatory for farmers with loanee accounts linked to notified crops. Voluntary for non-loanee farmers.</li>
+      </ul>
+
+      <a href="https://pmfby.gov.in/" target="_blank" class="apply-btn">Visit Official Portal <i class="fa-solid fa-external-link-alt"></i></a>
+    </div>
+  </div>
+
+  <!-- Scheme 3: Machinery Subsidy (SMAM) -->
+  <div class="scheme-detail-card" id="machinery-subsidy">
+    <div class="scheme-detail-icon"><i class="fa-solid fa-tractor"></i></div>
+    <div class="scheme-detail-content">
+      <h2>Sub-Mission on Agricultural Mechanization (SMAM)</h2>
+      <p>Agricultural Mechanization helps in increasing production through timely farm operations and reducing the cost of operations by way of better management of power and inputs. The SMAM scheme focuses on providing subsidies to farmers for purchasing modern tractors, harvesters, and tools.</p>
+      
+      <h4>Key Benefits</h4>
+      <ul>
+        <li><i class="fa-solid fa-check-circle"></i> Financial assistance ranging from 40% to 80% on the cost of the agricultural machinery.</li>
+        <li><i class="fa-solid fa-check-circle"></i> Special higher subsidies for SC, ST, Small, Marginal, and Women farmers.</li>
+        <li><i class="fa-solid fa-check-circle"></i> Establishment of Custom Hiring Centres (CHCs) to rent equipment at affordable rates.</li>
+      </ul>
+
+      <h4>Eligibility</h4>
+      <ul>
+        <li><i class="fa-solid fa-user-check"></i> Any registered farmer holding a valid Aadhaar and bank account.</li>
+        <li><i class="fa-solid fa-user-check"></i> Priority is given to individuals holding lesser land sizes.</li>
+      </ul>
+
+      <a href="https://agrimachinery.nic.in/" target="_blank" class="apply-btn">Visit Official Portal <i class="fa-solid fa-external-link-alt"></i></a>
+    </div>
+  </div>
+
+</div>
+
+
+<script src="js/home.js"></script>

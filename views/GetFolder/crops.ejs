@@ -1,0 +1,258 @@
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+
+<link rel="stylesheet" href="/css/crops.css" />
+
+<section class="market-section">
+  <div class="search-container">
+    <div class="search-wrapper">
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchInput" placeholder="Search crops like Wheat, Mango..." onkeyup="filterCrops()" />
+      <button class="search-action-btn">Search</button>
+    </div>
+  </div>
+
+  <div class="market-grid" id="cropList">
+    <% let i = 0; %>
+    <% for(crop of crops) { %>
+      <div class="market-card" style="--delay: <%= i++ %>;">
+        <a href="/showcrops/<%=crop._id%>">
+          <div class="img-container">
+            <img src="<%=crop.imageUrl%>" alt="Image">
+          </div>
+          <div class="card-content">
+            <h3 style="display: flex; justify-content: space-between; align-items: center;">
+              <%=crop.name%>
+            </h3>
+            
+            <div class="info-line">
+              <span class="label">Price</span>
+              <span class="value price-value">₹<%=crop.price%> / Kg</span>
+            </div>
+            
+            <div class="info-line">
+              <span class="label">Quantity</span>
+              <span class="value"><%=crop.quantity%></span>
+            </div>
+            
+            <div class="info-row">
+              <span class="label">Seller</span>
+              <span class="value"><%= crop.email === user.email ? '<span class="seller-badge">You (Seller)</span>' : crop.seller %></span>
+            </div>
+            
+            <div class="info-line">
+              <span class="label">Contact</span>
+              <span class="value">+91 <%=crop.contact%></span>
+            </div>
+            
+            <div class="info-line">
+              <span class="label">Location</span>
+              <span class="value"><%=crop.city%></span>
+            </div>
+          </div>
+        </a>
+
+        <% if (crop.email === user.email) { %>
+          <div class="seller-listing-actions">
+            <div class="seller-notice-badge"><i class="fa-solid fa-eye"></i> Live in Marketplace</div>
+            <div class="seller-btns">
+              <a href="/editAuth/<%= crop._id %>" class="seller-mini-btn edit"><i class="fa-solid fa-pen"></i> Edit</a>
+              <form action="/deleteAuth/<%= crop._id %>?_method=DELETE" method="POST" style="flex: 1;">
+                <button type="submit" class="seller-mini-btn delete" onclick="return confirm('⚠️ Permanently delete this listing?')">
+                  <i class="fa-solid fa-trash"></i> Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        <% } else { %>
+          <!-- Add To Cart button -->
+          <button 
+            class="buy-btn" 
+            data-id="<%= crop._id %>" 
+            data-name="<%= crop.name %>"
+            data-price="<%= crop.price %>"
+            data-quantity="<%= crop.quantity %>"
+            data-seller="<%= crop.seller %>"
+            data-email="<%= crop.email %>"
+            data-contact="<%= crop.contact %>"
+            data-upi="<%= crop.upi %>"
+            data-image="<%= crop.imageUrl %>"
+          ><i>🛒</i> ADD To Cart</button>        
+        <% } %>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- Hidden form for checkout -->
+<form id="checkoutForm" action="/buying" method="POST">
+  <input type="hidden" id="cartData" name="cartData" />
+</form>
+
+<!-- Toast Notification Container -->
+<div id="toast-container" class="toast-container"></div>
+
+<script>
+  function filterCrops() {
+    const input = document.getElementById("searchInput").value.toLowerCase().trim();
+    const cards = document.querySelectorAll(".market-card");
+    cards.forEach(card => {
+      const cropName = card.querySelector("h3").textContent.toLowerCase();
+      if (cropName.includes(input)) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
+  }
+
+  // Toast Function
+  function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type} animate-slide-in`;
+    toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-info'}"></i> ${message}`;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add('animate-slide-out');
+      setTimeout(() => toast.remove(), 500);
+    }, 3000);
+  }
+
+  // Logged in user
+  const currentUser = "<%= user.email %>";
+
+  // Local storage key per user
+  let cartKey = "cartItems_" + currentUser;
+  let cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  function updateCartCount() {
+    const countEl = document.getElementById("cartCount");
+    if (countEl) countEl.innerText = cartItems.length || 0;
+  }
+
+  function updateButtonState(button, cropId) {
+    const inCart = cartItems.find(item => item.id === cropId);
+    if (inCart) {
+      button.innerHTML = `<i class="fa-solid fa-trash-can"></i> REMOVE From Cart`;
+      button.style.background = "#e53935"; // red
+    } else {
+      button.innerHTML = `<i class="fa-solid fa-cart-plus"></i> ADD To Cart`;
+      button.style.background = "#43a047"; // green
+    }
+  }
+
+  // Fly to Cart Animation
+  function flyToCart(imgElement) {
+    const cart = document.getElementById('navCartTrigger');
+    const badge = document.getElementById('cartCount');
+    if (!cart || !imgElement) return;
+
+    // Create a clone of the image
+    const flyingImg = imgElement.cloneNode();
+    const rect = imgElement.getBoundingClientRect();
+    const cartRect = cart.getBoundingClientRect();
+
+    Object.assign(flyingImg.style, {
+      position: 'fixed',
+      top: `${rect.top}px`,
+      left: `${rect.left}px`,
+      width: `${rect.width}px`,
+      height: `${rect.height}px`,
+      zIndex: '10000',
+      transition: 'all 0.8s cubic-bezier(0.42, 0, 0.58, 1)',
+      borderRadius: '50%',
+      pointerEvents: 'none',
+      opacity: '0.8'
+    });
+
+    document.body.appendChild(flyingImg);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      Object.assign(flyingImg.style, {
+        top: `${cartRect.top}px`,
+        left: `${cartRect.left}px`,
+        width: '20px',
+        height: '20px',
+        opacity: '0.2',
+        transform: 'rotate(720deg)'
+      });
+    });
+
+    // Cleanup and pulse
+    setTimeout(() => {
+      flyingImg.remove();
+      if (badge) {
+        badge.classList.add('pulse');
+        setTimeout(() => badge.classList.remove('pulse'), 400);
+      }
+    }, 800);
+  }
+
+  // Initialize buttons
+  updateCartCount();
+  document.querySelectorAll(".buy-btn").forEach(button => {
+    const cropId = button.dataset.id;
+    updateButtonState(button, cropId);
+
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
+      
+      const cropData = {
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: this.dataset.price,
+        quantity: this.dataset.quantity,
+        seller: this.dataset.seller,
+        email: this.dataset.email,
+        contact: this.dataset.contact,
+        upi: this.dataset.upi,
+        image: this.dataset.image   
+      };
+
+      let existing = cartItems.find(item => item.id === cropId);
+      if (existing) {
+        // Remove
+        cartItems = cartItems.filter(item => item.id !== cropId);
+        showToast(`${cropData.name} removed from cart`, 'info');
+      } else {
+        // Add
+        cartItems.push(cropData);
+        
+        // Trigger Fly Animation
+        const card = this.closest('.market-card');
+        const img = card ? card.querySelector('img') : null;
+        if (img) flyToCart(img);
+        
+        showToast(`${cropData.name} added to cart!`, 'success');
+      }
+
+      // Save
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+      
+      // Update with a slight delay if adding (wait for fly animation to hit)
+      if (!existing) {
+        setTimeout(() => {
+          updateCartCount();
+          updateButtonState(this, cropId);
+        }, 800);
+      } else {
+        updateCartCount();
+        updateButtonState(this, cropId);
+      }
+    });
+  });
+
+  // Submit cart on cart icon click
+  const cartTrigger = document.querySelector(".cart-container");
+  if (cartTrigger) {
+    cartTrigger.addEventListener("click", function () {
+      const form = document.getElementById("checkoutForm");
+      if (form) {
+        document.getElementById("cartData").value = JSON.stringify(cartItems);
+        form.submit();
+      }
+    });
+  }
+</script>

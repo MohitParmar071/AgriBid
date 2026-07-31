@@ -1,0 +1,29 @@
+<!--boiler plats-->
+<% layout("../layoutes/EnteringBoilerplats") %>
+<link rel="stylesheet" href="/css/login.css">
+
+<div class="form-container">
+  <h2>Reset Password</h2>
+  <p style="text-align: center; font-size: 14px; margin-bottom: 20px;">Enter your registered email to receive an OTP.</p>
+
+  <% if(typeof error !== 'undefined' && error) { %>
+    <div class="alert">
+        <p><%=error%></p>
+    </div>
+  <%}%>  
+
+  <form action="/forget" method="POST">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Send OTP</button>
+    </div>
+  </form>
+  
+  <div class="register-link">
+     <a href="/login">Back to Login</a>
+  </div>
+</div>

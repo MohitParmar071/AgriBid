@@ -1,0 +1,237 @@
+<% 
+  // Emergency fix for the navbar error: 
+  // Restore the session user from currentUser since app.js accidentally passed null
+  if (!user && currentUser) { 
+      user = currentUser; 
+  } 
+%>
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/market.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<main class="market-dashboard">
+  <!-- Hero / Header -->
+  <header class="market-hero">
+    <div class="market-hero__content">
+      <h1>AgriBid Market Insights</h1>
+      <p>Analyze real-time crop prices, track market trends, and find available warehouse storage. Connect directly with bulk sellers to grow your business.</p>
+    </div>
+  </header>
+
+  <!-- Analytics Section -->
+  <section class="analytics-section">
+    <div class="analytics-grid">
+      
+      <!-- Chart Card -->
+      <div class="analytic-card chart-card">
+        <h3>Crop Price Trends (Live)</h3>
+        <p class="subtitle">Weekly price fluctuation per quintal (₹)</p>
+        <div class="chart-container">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Right Column: Live Prices & Warehouse -->
+      <div class="analytic-side">
+        <!-- Live Market Prices -->
+        <div class="analytic-card">
+          <h3>Market Prices Today</h3>
+          <ul class="live-prices-list">
+            <li>
+              <span class="crop-icon">🌾</span>
+              <div class="crop-info">
+                <strong>Wheat (Lokwan)</strong>
+                <small>Demand: High</small>
+              </div>
+              <div class="price-info up">
+                <strong>₹2,450 / qtl</strong>
+                <small>+2.4%</small>
+              </div>
+            </li>
+            <li>
+              <span class="crop-icon">🍚</span>
+              <div class="crop-info">
+                <strong>Rice (Basmati)</strong>
+                <small>Demand: Stable</small>
+              </div>
+              <div class="price-info up">
+                <strong>₹3,800 / qtl</strong>
+                <small>+1.1%</small>
+              </div>
+            </li>
+            <li>
+              <span class="crop-icon">🌱</span>
+              <div class="crop-info">
+                <strong>Soyabean</strong>
+                <small>Demand: Moderate</small>
+              </div>
+              <div class="price-info down">
+                <strong>₹4,100 / qtl</strong>
+                <small>-0.8%</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Warehouse Data -->
+        <div class="analytic-card warehouse-card">
+          <h3>Warehouse Availability</h3>
+          <div class="warehouse-stats">
+            <div class="stat">
+              <span class="value">78%</span>
+              <span class="label">Total Occupancy</span>
+            </div>
+            <div class="stat green">
+              <span class="value">12k Tonnes</span>
+              <span class="label">Available Space</span>
+            </div>
+          </div>
+          <p class="warehouse-note">Nearest Facility: <strong>AgriCorp Storage, Pune</strong> (24 km away) <br> <span class="rate">Storage Rate: ₹15/quintal/month</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marketplace Section -->
+  <section id="catalog" class="market-catalog">
+    <div class="catalog-header">
+      <h2>Verified Bulk Listings</h2>
+      <p>Browse active listings with >100 kg availability.</p>
+    </div>
+
+    <div class="catalog-controls">
+      <form class="search-form" action="/market" method="GET">
+        <input name="q" value="<%= typeof query !== 'undefined' ? query : '' %>" placeholder="Search crops, city or seller..." />
+        <button class="search-btn" type="submit"><i class="fas fa-search"></i></button>
+      </form>
+
+      <div class="filter-row">
+        <select id="sort" name="sort" onchange="location = this.value;">
+          <option value="/market?sort=newest" <% if(typeof sort !== 'undefined' && sort==='newest') { %>selected<% } %>>Newest</option>
+          <option value="/market?sort=price-asc" <% if(typeof sort !== 'undefined' && sort==='price-asc') { %>selected<% } %>>Price: Low → High</option>
+          <option value="/market?sort=price-desc" <% if(typeof sort !== 'undefined' && sort==='price-desc') { %>selected<% } %>>Price: High → Low</option>
+          <option value="/market?sort=qty-desc" <% if(typeof sort !== 'undefined' && sort==='qty-desc') { %>selected<% } %>>Quantity: High → Low</option>
+        </select>
+      </div>
+    </div>
+
+    <% if (typeof crops === 'undefined' || !crops || crops.length === 0) { %>
+      <div class="empty-state">
+        <i class="fas fa-box-open fa-3x"></i>
+        <h3>No bulk crops found</h3>
+        <p>Try adjusting your search criteria or check back later.</p>
+        <a href="/addNew" class="btn primary">Sell Your Crop</a>
+      </div>
+    <% } else { %>
+      <div class="catalog-grid">
+        <% crops.forEach(function(crop) { 
+            const qtyNum = parseInt(String(crop.quantity).replace(/\D/g,''),10) || 0;
+        %>
+          <div class="market-card">
+            <div class="market-card__image">
+              <img alt="<%= crop.name %>" src="<%= crop.imageUrl || 'https://images.pexels.com/photos/1640773/pexels-photo-1640773.jpeg' %>">
+              <div class="badge-bulk">Bulk • <%= qtyNum %> kg</div>
+            </div>
+            <div class="market-card__content">
+              <h3><%= crop.name %></h3>
+              <div class="price-row">
+                <span class="price">₹<%= crop.price %> <small>/ kg</small></span>
+                <span class="location"><i class="fas fa-map-marker-alt"></i> <%= crop.city %></span>
+              </div>
+              <div class="seller-info">
+                <i class="fas fa-user-circle"></i> <%= crop.seller %>
+              </div>
+              <div class="card-actions">
+                <a href="/showcrops/<%= crop._id %>" class="btn outline">Details</a>
+                <% if (user && crop.email === user.email) { %>
+                   <form action="/deleteAuth/<%= crop._id %>?_method=DELETE" method="POST" style="margin:0;">
+                     <button type="submit" class="btn delete-btn-market" onclick="return confirm('⚠️ Delete this bulk listing permanently?')">Delete</button>
+                   </form>
+                <% } else { %>
+                  <form action="/buying" method="POST" style="margin:0;">
+                    <input type="hidden" name="cartData" value='[{"name":"<%= crop.name %>", "price":<%= crop.price %>, "quantity":<%= qtyNum %>, "image":"<%= crop.imageUrl || "" %>", "sellerEmail":"<%= crop.email %>"}]'>
+                    <button type="submit" class="btn primary">Buy Now</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </section>
+</main>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    
+    // Gradient for chart
+    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(46, 125, 50, 0.5)');
+    gradient.addColorStop(1, 'rgba(46, 125, 50, 0)');
+
+    let gradient2 = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient2.addColorStop(0, 'rgba(245, 124, 0, 0.5)');
+    gradient2.addColorStop(1, 'rgba(245, 124, 0, 0)');
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+          {
+            label: 'Wheat (₹/qtl)',
+            data: [2380, 2400, 2390, 2420, 2415, 2440, 2450],
+            borderColor: '#2e7d32',
+            backgroundColor: gradient,
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#2e7d32',
+            pointRadius: 4
+          },
+          {
+            label: 'Soyabean (₹/qtl)',
+            data: [4200, 4180, 4150, 4190, 4110, 4120, 4100],
+            borderColor: '#f57c00',
+            backgroundColor: gradient2,
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#f57c00',
+            pointRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: {
+            mode: 'index',
+            intersect: false,
+            backgroundColor: 'rgba(0,0,0,0.8)'
+          }
+        },
+        scales: {
+          y: { 
+            beginAtZero: false,
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          x: { 
+            grid: { display: false }
+          }
+        },
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false
+        }
+      }
+    });
+  });
+</script>

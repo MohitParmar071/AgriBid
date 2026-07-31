@@ -1,0 +1,316 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/checkout.css?v=3" />
+
+<main class="checkout-page animate-slide-up">
+  <div class="checkout-container wide">
+    <!-- Wizard Progress Line -->
+    <div class="checkout-wizard-nav mb-5">
+      <div class="wizard-step active" id="step1-nav">
+        <span class="step-num">1</span>
+        <span class="step-label">My Basket</span>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="step2-nav">
+        <span class="step-num">2</span>
+        <span class="step-label">Shipping Details</span>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step" id="step3-nav">
+        <span class="step-num">3</span>
+        <span class="step-label">Review & Pay</span>
+      </div>
+    </div>
+
+    <!-- Step 1: Cart Review -->
+    <div class="wizard-content" id="step1-content">
+      <div class="confirmation-card glass">
+        <div class="header-with-icon">
+          <i class="fa-solid fa-basket-shopping primary-icon"></i>
+          <h2>Review Your Items</h2>
+        </div>
+        <p class="text-muted mb-4">Please verify your selection before we collect delivery details.</p>
+        
+        <div id="wizardItemList" class="premium-item-list">
+          <!-- Items injected here -->
+        </div>
+
+        <div class="cart-summary-footer mt-4">
+          <div class="total-row">
+            <span>Subtotal Value:</span>
+            <span id="wizardSubtotal">₹0</span>
+          </div>
+          <button type="button" class="btn-checkout primary-btn mt-3" onclick="goToStep(2)">
+            <span>Continue to Shipping</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Shipping Details -->
+    <div class="wizard-content hidden" id="step2-content">
+      <div class="confirmation-card glass">
+        <div class="header-with-icon">
+          <i class="fa-solid fa-truck-fast primary-icon"></i>
+          <h2>Shipping Information</h2>
+        </div>
+        
+        <form id="proOrderForm" onsubmit="event.preventDefault(); goToStep(3);">
+          <div class="pro-grid-2">
+            <div class="checkout-form-group">
+              <label>Consignee Name</label>
+              <div class="checkout-input-wrap">
+                <input type="text" id="shipperName" value="<%= user.name %>" class="checkout-input pro-input" required placeholder="Full legal name">
+              </div>
+            </div>
+            <div class="checkout-form-group">
+              <label>Contact Email</label>
+              <div class="checkout-input-wrap">
+                <input type="email" id="shipperEmail" value="<%= user.email %>" class="checkout-input pro-input" required>
+              </div>
+            </div>
+          </div>
+          
+          <div class="checkout-form-group mt-3">
+            <label>Full Delivery Destination</label>
+            <div class="checkout-input-wrap">
+              <textarea id="shipperAddress" class="checkout-input pro-input" rows="3" required placeholder="Street, House No, City, PIN Code"></textarea>
+            </div>
+          </div>
+
+          <div class="wizard-footer-actions mt-5">
+            <button type="button" class="btn-nav-back" onclick="goToStep(1)">
+              <i class="fa-solid fa-chevron-left"></i>
+              <span>Modify Basket Items</span>
+            </button>
+            <button type="submit" class="btn-checkout primary-btn">
+              <span>Review Order Bill</span>
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Step 3: Review Invoice Preview -->
+    <div class="wizard-content hidden" id="step3-content">
+      <div class="confirmation-card glass invoice-preview">
+        <div class="invoice-header-branding">
+          <div class="pro-logo">🌾 AgriBid<span>.com</span></div>
+          <div class="invoice-meta">
+            <h4>ORDER PREVIEW</h4>
+            <p>Date: <%= new Date().toLocaleDateString() %></p>
+          </div>
+        </div>
+
+        <div class="invoice-billing-split mt-4">
+          <div class="bill-to">
+            <h5>DELIVER TO:</h5>
+            <p id="previewName"></p>
+            <p id="previewEmail" class="text-muted"></p>
+            <p id="previewAddress" class="address-box"></p>
+          </div>
+        </div>
+
+        <div class="invoice-table-wrap mt-4">
+          <table class="pro-invoice-table">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th class="text-right">Price</th>
+                <th class="text-center">Qty</th>
+                <th class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody id="invoiceTableBody">
+              <!-- Items here -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-right">Subtotal:</td>
+                <td class="text-right" id="previewSubTotal">₹0</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-right">GST (5%):</td>
+                <td class="text-right" id="previewGST">₹0.00</td>
+              </tr>
+              <tr>
+                <td colspan="3" class="text-right">Platform Service Fee:</td>
+                <td class="text-right">₹0.00</td>
+              </tr>
+              <tr class="grand-total-row">
+                <td colspan="3" class="text-right">Grand Total Payable:</td>
+                <td class="text-right" id="previewTotal">₹0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="wizard-footer-actions mt-5">
+          <button type="button" class="btn-nav-back" onclick="goToStep(2)">
+            <i class="fa-solid fa-user-pen"></i>
+            <span>Edit Shipping Info</span>
+          </button>
+          <!-- Final Form Submission -->
+          <form id="finalOrderForm" action="/order" method="POST">
+             <input type="hidden" name="buyerName" id="finalName">
+             <input type="hidden" name="buyerEmail" id="finalEmail">
+             <input type="hidden" name="buyerAddress" id="finalAddress">
+             <input type="hidden" name="cartData" id="finalCartData">
+             <input type="hidden" name="totalAmount" id="finalTotalAmount">
+             
+             <button type="submit" class="btn-checkout pro-btn-glow">
+                <span>Confirm & Pay Now</span>
+                <i class="fa-solid fa-shield-check"></i>
+             </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  let currentStep = 1;
+  const userEmail = "<%= user.email %>";
+  const cartKey = "cartItems_" + userEmail;
+  let cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+  function goToStep(step) {
+    // Hide all
+    document.querySelectorAll('.wizard-content').forEach(c => c.classList.add('hidden'));
+    document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active', 'completed'));
+    
+    // Show current
+    document.getElementById(`step${step}-content`).classList.remove('hidden');
+    
+    // Update nav
+    for(let i=1; i<=3; i++) {
+      const stepNav = document.getElementById(`step${i}-nav`);
+      if(i < step) stepNav.classList.add('completed');
+      if(i === step) stepNav.classList.add('active');
+    }
+    
+    if(step === 3) preparePreview();
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderWizardCart() {
+    const list = document.getElementById('wizardItemList');
+    const summaryFooter = document.querySelector('.cart-summary-footer');
+    
+    if (cartItems.length === 0) {
+      list.innerHTML = `
+        <div class="empty-cart-container animate-fade-in">
+          <i class="fa-solid fa-cart-arrow-down empty-icon"></i>
+          <h3>Your basket is currently empty</h3>
+          <p>It seems you haven't added any harvest gems to your cart yet.</p>
+          <a href="/crops" class="btn-checkout primary-btn mt-4 inline-flex">
+            <i class="fa-solid fa-leaf"></i>
+            <span>Browse Fresh Products</span>
+          </a>
+        </div>
+      `;
+      if (summaryFooter) summaryFooter.style.display = 'none';
+      return;
+    }
+
+    if (summaryFooter) summaryFooter.style.display = 'block';
+
+    let total = 0;
+    let html = "";
+    cartItems.forEach((item, index) => {
+      const numericQty = parseFloat(String(item.quantity).replace(/[^\d.]/g, "")) || 1;
+      const itemTotal = item.price * numericQty;
+      total += itemTotal;
+      
+      html += `
+        <div class="pro-item-card glass animate-fade-in" style="animation-delay: ${index * 0.1}s">
+          <img src="${item.image || '/images/placeholder.png'}" class="pro-thumb">
+          <div class="pro-details">
+            <h4>${item.name}</h4>
+            <span class="pro-seller">Sold by: ${item.seller}</span>
+            <div class="pro-price-qty mt-2">
+              <div class="qty-control miniaturized">
+                 <button type="button" onclick="updateWizardQty(${index}, -1)">-</button>
+                 <span>${numericQty}</span>
+                 <button type="button" onclick="updateWizardQty(${index}, 1)">+</button>
+              </div>
+              <span class="pro-line-total">₹${itemTotal.toLocaleString('en-IN')}</span>
+            </div>
+          </div>
+          <button type="button" class="pro-remove" onclick="removeWizardItem(${index})"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+      `;
+    });
+    list.innerHTML = html;
+    document.getElementById('wizardSubtotal').innerText = `₹${total.toLocaleString('en-IN')}`;
+    document.getElementById('finalTotalAmount').value = total;
+  }
+
+  function updateWizardQty(index, delta) {
+    let current = parseFloat(String(cartItems[index].quantity).replace(/[^\d.]/g, "")) || 1;
+    let newVal = current + delta;
+    if (newVal < 1) newVal = 1;
+    const unit = String(cartItems[index].quantity).match(/[a-zA-Z]+/)?.[0] || "";
+    cartItems[index].quantity = newVal + unit;
+    localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    renderWizardCart();
+  }
+
+  function removeWizardItem(index) {
+    cartItems.splice(index, 1);
+    localStorage.setItem(cartKey, JSON.stringify(cartItems));
+    renderWizardCart();
+  }
+
+  function preparePreview() {
+    document.getElementById('previewName').innerText = document.getElementById('shipperName').value;
+    document.getElementById('previewEmail').innerText = document.getElementById('shipperEmail').value;
+    document.getElementById('previewAddress').innerText = document.getElementById('shipperAddress').value;
+    
+    // Sync to hidden final form
+    document.getElementById('finalName').value = document.getElementById('shipperName').value;
+    document.getElementById('finalEmail').value = document.getElementById('shipperEmail').value;
+    document.getElementById('finalAddress').value = document.getElementById('shipperAddress').value;
+    document.getElementById('finalCartData').value = JSON.stringify(cartItems);
+
+    // Render Preview Table
+    const tableBody = document.getElementById('invoiceTableBody');
+    let total = 0;
+    let html = "";
+    cartItems.forEach(item => {
+      const qty = parseFloat(String(item.quantity).replace(/[^\d.]/g, "")) || 1;
+      const sub = item.price * qty;
+      total += sub;
+      html += `
+        <tr>
+          <td>
+            <div class="invoice-desc"><strong>${item.name}</strong><br><small>HNR-CODE: 12109</small></div>
+          </td>
+          <td class="text-right">₹${item.price.toLocaleString('en-IN')}</td>
+          <td class="text-center">${qty}</td>
+          <td class="text-right">₹${sub.toLocaleString('en-IN')}</td>
+        </tr>
+      `;
+    });
+    tableBody.innerHTML = html;
+    
+    const gstRate = 0.05;
+    const gstAmount = Math.round(total * gstRate);
+    const finalTotal = total + gstAmount;
+
+    if (document.getElementById('previewSubTotal')) {
+      document.getElementById('previewSubTotal').innerText = `₹${total.toLocaleString('en-IN')}`;
+    }
+    if (document.getElementById('previewGST')) {
+      document.getElementById('previewGST').innerText = `₹${gstAmount.toLocaleString('en-IN')}`;
+    }
+    document.getElementById('previewTotal').innerText = `₹${finalTotal.toLocaleString('en-IN')}`;
+    document.getElementById('finalTotalAmount').value = finalTotal;
+  }
+
+  document.addEventListener('DOMContentLoaded', renderWizardCart);
+</script>
+

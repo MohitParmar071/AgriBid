@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriBid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/Style.css">
+    <style>
+      /* Force hide google translate banner directly in HTML */
+      iframe[src*="translate.googleapis.com"], iframe[id*="goog"] { display: none !important; }
+      .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame { display: none !important; }
+      body { top: 0px !important; position: static !important; }
+      .goog-tooltip, .goog-tooltip:hover { display: none !important; }
+      .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+      #goog-gt-tt { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+    <header>
+    <nav class="navbar">
+      <div class="logo"><span class="logoSpan">🌾Agri</span>Bid</div>
+      <ul class="nav-links" style="align-items: center;">
+        <li><a href="/login">LogIn</a></li>
+        <li><a href="/register">Register</a></li>
+        
+        <!-- Language Selector -->
+        <li style="display: flex; align-items: center; margin-left: 10px;">
+          <div class="custom-lang-selector">
+            <button class="lang-btn" onclick="toggleLangDropdown(event)">
+              <span id="selected-flag">🇬🇧</span> <span id="selected-lang">English</span> <i class="fa fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
+            </button>
+            <ul class="lang-dropdown" id="lang-dropdown">
+              <li onclick="selectLang('en', '🇬🇧', 'English')"><span>🇬🇧</span> English</li>
+              <li onclick="selectLang('hi', '🇮🇳', 'Hindi')"><span>🇮🇳</span> Hindi</li>
+              <li onclick="selectLang('gu', '🇮🇳', 'Gujarati')"><span>🇮🇳</span> Gujarati</li>
+              <li onclick="selectLang('mr', '🇮🇳', 'Marathi')"><span>🇮🇳</span> Marathi</li>
+              <li onclick="selectLang('ta', '🇮🇳', 'Tamil')"><span>🇮🇳</span> Tamil</li>
+              <li onclick="selectLang('kn', '🇮🇳', 'Kannada')"><span>🇮🇳</span> Kannada</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="landing-main">
+    <!-- Automated Background Slider -->
+    <div class="bg-slider">
+      <div class="slide slide-1"></div>
+      <div class="slide slide-2"></div>
+      <div class="slide slide-3"></div>
+    </div>
+    <div class="slider-overlay"></div>
+
+    <section class="hero premium-glass-hero">
+      <div class="hero-chip"><i class="fa-solid fa-leaf"></i> The Future of Agriculture</div>
+      <h2 class="hero-title">Empowering Farmers,<br>Elevating Markets</h2>
+      <p class="hero-subtitle">AgriBid is the premier intelligent platform connecting farmers directly to nationwide buyers, providing real-time weather, expert crop guidance, and transparent auctions without middlemen.</p>
+      
+      <div class="hero-actions">
+        <a href="/register" class="cta-button btn-primary">Join for Free <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="/login" class="cta-button btn-secondary">Login to Account</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat glass-stat"><span class="num">10k+</span><span class="lbl">Farmers</span></div>
+        <div class="stat glass-stat"><span class="num">₹50Cr+</span><span class="lbl">Traded</span></div>
+        <div class="stat glass-stat"><span class="num">100%</span><span class="lbl">Transparent</span></div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 AgriBid. All Rights Reserved.</p>
+  </footer>
+</div>
+
+
+    <script src="js/main.js"></script>
+    
+<!-- Google Translate Widget -->
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+
+function toggleLangDropdown(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dropdown = document.getElementById('lang-dropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+function selectLang(code, flag, name) {
+  document.getElementById('selected-flag').innerText = flag;
+  document.getElementById('selected-lang').innerText = name;
+  document.getElementById('lang-dropdown').style.display = 'none';
+  
+  document.cookie = "googtrans=/en/" + code + "; path=/;";
+  document.cookie = "googtrans=/en/" + code + "; domain=." + document.domain + "; path=/;";
+  window.location.reload();
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.custom-lang-selector')) {
+    const dropdown = document.getElementById('lang-dropdown');
+    if (dropdown) dropdown.style.display = 'none';
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
+  if (match && match[1]) {
+    const code = match[1];
+    const mappings = {
+      'en': { flag: '🇬🇧', name: 'English' },
+      'hi': { flag: '🇮🇳', name: 'Hindi' },
+      'gu': { flag: '🇮🇳', name: 'Gujarati' },
+      'mr': { flag: '🇮🇳', name: 'Marathi' },
+      'ta': { flag: '🇮🇳', name: 'Tamil' },
+      'kn': { flag: '🇮🇳', name: 'Kannada' }
+    };
+    if (mappings[code]) {
+      document.getElementById('selected-flag').innerText = mappings[code].flag;
+      document.getElementById('selected-lang').innerText = mappings[code].name;
+    }
+  }
+});
+
+// Forcibly remove Google Translate popups, banners & body shifts dynamically
+setInterval(() => {
+  const banner = document.querySelector('.goog-te-banner-frame');
+  if (banner) banner.remove();
+  
+  const badFrames = document.querySelectorAll('iframe.goog-te-banner-frame, iframe[src*="translate.googleapis.com"], iframe[id*="goog"]');
+  badFrames.forEach(f => f.remove());
+  
+  const tooltips = document.querySelectorAll('.goog-tooltip, .goog-te-balloon-frame, #goog-gt-tt, #goog-gt-vt');
+  tooltips.forEach(t => t.remove());
+
+  if (document.body && document.body.style.top !== '0px') {
+    document.body.style.top = '0px';
+    document.body.style.position = 'static';
+  }
+  if (document.documentElement && document.documentElement.style.top !== '0px') {
+    document.documentElement.style.top = '0px';
+    document.documentElement.style.position = 'static';
+  }
+}, 50);
+
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

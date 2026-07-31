@@ -1,0 +1,97 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+<title>Edit Crop Details - AgriBid</title>
+<link rel="stylesheet" href="/css/addNew.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+  /* Custom overrides for the Edit Page */
+  .header-icon.edit-mode {
+    background: rgba(217, 119, 6, 0.1);
+    color: #d97706;
+  }
+  .form-header h2 {
+    color: #b45309;
+  }
+  .form-header p {
+    color: #666;
+    margin-top: 5px;
+    font-size: 15px;
+  }
+
+  button[type="submit"].btn-edit {
+    background: #d97706;
+    box-shadow: 0 4px 15px rgba(217, 119, 6, 0.2);
+    margin-top: 20px;
+  }
+  button[type="submit"].btn-edit:hover {
+    background: #b45309;
+    box-shadow: 0 8px 25px rgba(217, 119, 6, 0.3);
+  }
+</style>
+
+<main class="main-content">
+  <div class="form-container">
+    <div class="form-header">
+      <div class="header-icon edit-mode">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </div>
+      <h2>Edit Crop Details</h2>
+      <p>Update pricing, availability, and information for your listing.</p>
+    </div>
+
+    <form method="POST" action="/EditCrops/<%=crop._id%>?_method=PATCH">
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-seedling"></i> Crop Name</label>
+          <input type="text" value="<%=crop.name%>" name="crops[name]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-tags"></i> Price (₹ per unit)</label>
+          <input type="number" value="<%=crop.price%>" name="crops[price]" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-weight-scale"></i> Quantity</label>
+          <input type="text" value="<%=crop.quantity%>" name="crops[quantity]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-user"></i> Seller Name</label>
+          <input type="text" value="<%=crop.seller%>" name="crops[seller]" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> Email</label>
+          <input type="email" value="<%=crop.email%>" name="crops[email]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-phone"></i> Contact</label>
+          <input type="tel" value="<%=crop.contact%>" name="crops[contact]" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-location-dot"></i> Address</label>
+          <input type="text" value="<%=crop.city%>" name="crops[city]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-image"></i> Image URL</label>
+          <input type="url" value="<%=crop.imageUrl%>" name="crops[imageUrl]" required>
+        </div>
+      </div>
+
+      <input type="hidden" value="<%=crop.upi%>" name="crops[upi]">
+
+      <div class="form-footer">
+        <button type="submit" class="btn-edit"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+      </div>
+    </form>
+  </div>
+</main>

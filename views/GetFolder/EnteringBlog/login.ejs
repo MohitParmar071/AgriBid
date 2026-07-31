@@ -1,0 +1,58 @@
+<!--boiler plats-->
+<% layout("../layoutes/EnteringBoilerplats") %>
+
+<link rel="stylesheet" href="/css/login.css">
+
+
+  <div class="form-container">
+    <h2>Login to AgriBid</h2>
+
+    <% if(typeof message !== 'undefined') { %>
+          <div class="alert">
+              <p><%=message%></p>
+          </div>
+        <%}%>  
+
+    <form action="/login" method="POST">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email"  required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" required>
+          <span class="toggle-password" onclick="togglePasswordVis('password', this)"><i class="fa-solid fa-eye-slash"></i></span>
+        </div>
+      </div>
+          
+       <div class="forgot">
+       <a href="/forget">Forget Password :</a>
+       </div>
+
+      <div class="form-actions">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+      <div class="register-link">
+         <a href="/register">Don't have an account? Register here</a>
+       </div>
+    
+  </div>
+
+  <script>
+    function togglePasswordVis(inputId, iconSpan) {
+      const input = document.getElementById(inputId);
+      const icon = iconSpan.querySelector('i');
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      } else {
+        input.type = "password";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      }
+    }
+  </script>

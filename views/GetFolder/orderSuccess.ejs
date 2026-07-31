@@ -1,0 +1,145 @@
+<% layout("../layoutes/WebBoilerplats") %>    
+<link rel="stylesheet" href="/css/checkout.css?v=3" />    
+
+<main class="checkout-page animate-slide-up">
+  <div class="checkout-container">
+    <!-- Progress Indicator (Step 2 of 3) -->
+    <div class="checkout-wizard-nav mb-5">
+      <div class="wizard-step completed">
+        <span class="step-num">1</span>
+        <span class="step-label">Basket & Details</span>
+      </div>
+      <div class="wizard-connector active"></div>
+      <div class="wizard-step active">
+        <span class="step-num">2</span>
+        <span class="step-label">Review Bill</span>
+      </div>
+      <div class="wizard-connector"></div>
+      <div class="wizard-step">
+        <span class="step-num">3</span>
+        <span class="step-label">Payment</span>
+      </div>
+    </div>
+
+    <% if (order) { %>
+    <div class="invoice-container glass shadow-lg">
+      <!-- Invoice Header -->
+      <div class="invoice-pro-header">
+        <div class="brand-side">
+          <div class="pro-logo">🌾 AgriBid<span>.com</span></div>
+          <p class="tagline">Empowering Farmers, Enriching Markets</p>
+        </div>
+        <div class="meta-side text-right">
+          <h2 class="invoice-title">TAX INVOICE</h2>
+          <div class="meta-item">
+            <span class="label">Invoice No:</span>
+            <span class="value"><%= order.orderId %></span>
+          </div>
+          <div class="meta-item">
+            <span class="label">Date:</span>
+            <span class="value"><%= new Date(order.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) %></span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="pro-divider">
+
+      <!-- Address Grid -->
+      <div class="invoice-address-grid">
+        <div class="billing-box">
+          <h5 class="section-title">BILL TO:</h5>
+          <div class="address-content">
+            <p class="customer-name"><%= order.buyerName %></p>
+            <p class="customer-email"><%= order.buyerEmail %></p>
+            <p class="customer-address"><%= order.buyerAddress %></p>
+          </div>
+        </div>
+        <div class="shipping-box text-right">
+          <h5 class="section-title">DISPATCH FROM:</h5>
+          <p class="sender-name">AgriBid Logistics Hub</p>
+          <p class="sender-address">Main Warehouse, Sector 12<br>Ahmedabad, Gujarat, 380001</p>
+        </div>
+      </div>
+
+      <!-- Itemized Table -->
+      <div class="invoice-body mt-4">
+        <table class="pro-invoice-table">
+          <thead>
+            <tr>
+              <th class="text-left">ITEM DESCRIPTION</th>
+              <th class="text-right">UNIT PRICE</th>
+              <th class="text-center">QTY</th>
+              <th class="text-right">TOTAL (INR)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% order.cartItems.forEach(item => { %>
+              <tr>
+                <td>
+                  <div class="item-main">
+                    <span class="item-name"><%= item.name %></span>
+                    <span class="item-sku">SKU: AGR-<%= Math.floor(1000 + Math.random() * 9000) %></span>
+                  </div>
+                </td>
+                <td class="text-right">₹<%= item.price.toLocaleString('en-IN') %></td>
+                <td class="text-center"><%= item.quantity %></td>
+                <td class="text-right">₹<%= item.total.toLocaleString('en-IN') %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="text-right">Subtotal:</td>
+              <td class="text-right">₹<%= order.totalAmount.toLocaleString('en-IN') %></td>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-right">GST (Included):</td>
+              <td class="text-right">₹0.00</td>
+            </tr>
+            <tr class="grand-total-row">
+              <td colspan="3" class="text-right font-bold">TOTAL AMOUNT PAYABLE:</td>
+              <td class="text-right grand-price">₹<%= order.totalAmount.toLocaleString('en-IN') %></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Footer Actions -->
+      <div class="invoice-footer mt-5">
+        <div class="terms-side">
+          <p class="terms-heading">Terms & Conditions:</p>
+          <ul class="terms-list">
+            <li>Goods once sold are strictly non-refundable.</li>
+            <li>Subject to Ahmedabad Jurisdiction.</li>
+            <li>Digitally generated invoice, no signature required.</li>
+          </ul>
+        </div>
+        <div class="action-side text-right">
+          <form action="/payment" method="POST">    
+            <input type="hidden" name="orderId" value="<%= order.orderId %>">    
+            <input type="hidden" name="buyerName" value="<%= order.buyerName %>">    
+            <input type="hidden" name="buyerEmail" value="<%= order.buyerEmail %>">    
+            <input type="hidden" name="buyerAddress" value="<%= order.buyerAddress %>">    
+            <input type="hidden" name="totalAmount" value="<%= order.totalAmount %>">    
+            <input type="hidden" name="cartItems" value='<%- JSON.stringify(order.cartItems) %>'>    
+
+            <button type="submit" class="btn-checkout pro-pay-btn">
+              <span>Securely Pay Checkout</span>
+              <i class="fa-solid fa-lock"></i>
+            </button>
+          </form>
+          <p class="secure-note mt-2"><i class="fa-solid fa-shield-halved"></i> 256-bit SSL Encrypted</p>
+        </div>
+      </div>
+    </div>
+    <% } else { %>
+    <div class="error-card glass text-center p-5">
+      <i class="fa-solid fa-circle-exclamation error-icon"></i>
+      <h3>Invoice Generation Failed</h3>
+      <p>We encountered a technical glitch while preparing your bill. Please try re-ordering.</p>
+      <a href="/crops" class="btn-outline mt-3">Back to Marketplace</a>
+    </div>
+    <% } %>
+  </div>
+</main>
+

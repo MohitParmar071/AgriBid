@@ -1,0 +1,191 @@
+<% layout("../layoutes/WebBoilerplats") %>
+<link rel="stylesheet" href="/css/home.css">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  body {
+    background: #f8faf9;
+    font-family: 'Inter', sans-serif;
+    color: #2c3e50;
+    line-height: 1.6;
+  }
+  
+  .article-page-wrapper {
+    padding-top: 40px;
+    padding-bottom: 80px;
+  }
+
+  .article-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 30px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+    overflow: hidden;
+    border: 1px solid #eef2f0;
+  }
+
+  .article-hero-wrap {
+    width: 100%;
+    height: 480px;
+    position: relative;
+  }
+
+  .article-hero {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .article-content-wrapper {
+    padding: 60px 70px;
+  }
+
+  .article-header {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #edf2f0;
+  }
+
+  .article-category {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #2e7d32; /* Primary AgriBid Green */
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+  }
+
+  .article-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    color: #1a3c1e; /* Deep Forest Green for max contrast */
+    margin-bottom: 25px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    color: #5d6d7e;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .article-meta span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .article-meta i {
+    color: #2e7d32;
+    font-size: 1.1rem;
+  }
+
+  .article-body {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    color: #34495e;
+    line-height: 1.8;
+  }
+
+  .article-body h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.2rem;
+    color: #1b5e20;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    font-weight: 700;
+  }
+
+  .article-body h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.7rem;
+    color: #2e7d32;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  .article-body blockquote {
+    background: linear-gradient(to right, #f4f9f4, #ffffff);
+    border-left: 8px solid #2e7d32;
+    padding: 40px;
+    margin: 50px 0;
+    font-style: italic;
+    color: #1b5e20;
+    font-size: 1.4rem;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.05);
+  }
+
+  .back-nav {
+    max-width: 900px;
+    margin: 0 auto 30px auto;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #2e7d32;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 12px 24px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+
+  .back-btn:hover {
+    transform: translateX(-10px);
+    background: #2e7d32;
+    color: #ffffff;
+  }
+
+  @media (max-width: 800px) {
+    .article-content-wrapper { padding: 40px 30px; }
+    .article-title { font-size: 2.2rem; }
+    .article-hero-wrap { height: 320px; }
+  }
+</style>
+
+<div class="article-page-wrapper">
+  <div class="back-nav">
+    <a href="/home" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Article Hub</a>
+  </div>
+  
+  <article class="article-container">
+    <div class="article-hero-wrap">
+      <img src="<%= article.image %>" alt="<%= article.title %>" class="article-hero">
+    </div>
+    
+    <div class="article-content-wrapper">
+      <header class="article-header">
+        <span class="article-category"><i class="fa-solid fa-leaf"></i> Sustainable Farming</span>
+        <h1 class="article-title"><%= article.title %></h1>
+        <div class="article-meta">
+          <span><i class="fa-regular fa-calendar-check"></i> <%= article.date %></span>
+          <span><i class="fa-solid fa-user-pen"></i> AgriBid Experts</span>
+          <span><i class="fa-regular fa-clock"></i> 5 min read</span>
+        </div>
+      </header>
+      
+      <div class="article-body">
+        <%- article.content %>
+      </div>
+    </div>
+  </article>
+</div>

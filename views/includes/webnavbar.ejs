@@ -1,0 +1,216 @@
+
+  <!-- Header -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">🌾<span class="logoSpan">Agri</span>Bid</div>
+      <ul class="nav-links" style="align-items: center;">
+        <li><a href="/home">Home</a></li>
+        <li><a href="/bid">Bidding</a></li>
+         <li><a href="/Myorder">My Orders</a></li>
+        
+        <li style="display: flex; align-items: center;">
+          <div class="cart-container-wrapper">
+            <div class="cart-container" id="navCartTrigger">
+              <div class="cart-circle-bg">
+                <i class="fa-solid fa-cart-shopping cart-icon"></i>
+                <span id="cartCount" class="cart-badge">0</span>
+              </div>
+            </div>
+          </div>
+        </li>
+        
+        <!-- Checkout Button -->
+        <form id="checkoutForm" action="/buying" method="POST" style="display: none;">
+          <input type="hidden" name="cartData" id="cartData" />
+        </form>
+        
+        <li style="display: flex; align-items: center;">
+          <a href="#" class="no-hover-line" style="padding: 0; display: flex;">
+            <img src="<%= user && user.img ? user.img : 'https://cdn-icons-png.flaticon.com/512/149/149071.png' %>" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'" alt="Profile" id="profileBtn" class="profile-icon" style="margin: 0;" />
+          </a>
+        </li>
+        
+        <!-- Language Selector -->
+        <li style="display: flex; align-items: center; margin-left: 10px;">
+          <div class="custom-lang-selector">
+            <button class="lang-btn" onclick="toggleLangDropdown(event)">
+              <span id="selected-flag">🇬🇧</span> <span id="selected-lang">English</span> <i class="fa fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
+            </button>
+            <ul class="lang-dropdown" id="lang-dropdown">
+              <li onclick="selectLang('en', '🇬🇧', 'English')"><span>🇬🇧</span> English</li>
+              <li onclick="selectLang('hi', '🇮🇳', 'Hindi')"><span>🇮🇳</span> Hindi</li>
+              <li onclick="selectLang('gu', '🇮🇳', 'Gujarati')"><span>🇮🇳</span> Gujarati</li>
+              <li onclick="selectLang('mr', '🇮🇳', 'Marathi')"><span>🇮🇳</span> Marathi</li>
+              <li onclick="selectLang('ta', '🇮🇳', 'Tamil')"><span>🇮🇳</span> Tamil</li>
+              <li onclick="selectLang('kn', '🇮🇳', 'Kannada')"><span>🇮🇳</span> Kannada</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      
+<script>
+function toggleLangDropdown(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  const dropdown = document.getElementById('lang-dropdown');
+  dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+}
+
+function selectLang(code, flag, name) {
+  document.getElementById('selected-flag').innerText = flag;
+  document.getElementById('selected-lang').innerText = name;
+  document.getElementById('lang-dropdown').style.display = 'none';
+  
+  if (typeof translatePage === 'function') {
+    translatePage(code);
+  } else {
+    document.cookie = "googtrans=/en/" + code + "; path=/;";
+    document.cookie = "googtrans=/en/" + code + "; domain=." + document.domain + "; path=/;";
+    window.location.reload();
+  }
+}
+
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.custom-lang-selector')) {
+    const dropdown = document.getElementById('lang-dropdown');
+    if (dropdown) dropdown.style.display = 'none';
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const match = document.cookie.match(/googtrans=\/en\/([a-z]{2})/);
+  if (match && match[1]) {
+    const code = match[1];
+    const mappings = {
+      'en': { flag: '🇬🇧', name: 'English' },
+      'hi': { flag: '🇮🇳', name: 'Hindi' },
+      'gu': { flag: '🇮🇳', name: 'Gujarati' },
+      'mr': { flag: '🇮🇳', name: 'Marathi' },
+      'ta': { flag: '🇮🇳', name: 'Tamil' },
+      'kn': { flag: '🇮🇳', name: 'Kannada' }
+    };
+    if (mappings[code]) {
+      document.getElementById('selected-flag').innerText = mappings[code].flag;
+      document.getElementById('selected-lang').innerText = mappings[code].name;
+    }
+  }
+});
+
+// Forcibly remove Google Translate popups, banners & body shifts dynamically
+setInterval(() => {
+  const banner = document.querySelector('.goog-te-banner-frame');
+  if (banner) banner.remove();
+  
+  const badFrames = document.querySelectorAll('iframe.goog-te-banner-frame');
+  badFrames.forEach(f => f.remove());
+  
+  const tooltips = document.querySelectorAll('.goog-tooltip, .goog-te-balloon-frame, #goog-gt-tt, #goog-gt-vt');
+  tooltips.forEach(t => t.remove());
+
+  if (document.body && document.body.style.top !== '0px') {
+    document.body.style.top = '0px';
+    document.body.style.position = 'static';
+  }
+  if (document.documentElement && document.documentElement.style.top !== '0px') {
+    document.documentElement.style.top = '0px';
+    document.documentElement.style.position = 'static';
+  }
+}, 50);
+</script>
+<style>
+  .cart-container-wrapper { position: relative; margin-right: 15px; }
+  .cart-container { cursor: pointer; position: relative; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  
+  .cart-circle-bg {
+    width: 42px;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.15); /* Sleek glass effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    transition: all 0.3s;
+  }
+  
+  .cart-container:hover .cart-circle-bg {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #28a745;
+    box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+    transform: translateY(-2px);
+  }
+  
+  .cart-icon { 
+    font-size: 18px !important; 
+    color: #fff !important;
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important; /* Forces solid weight */
+    line-height: 1;
+    display: inline-block;
+  }
+  
+  .cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    background: #FF3D00; /* Vibrant professional orange-red */
+    color: #fff !important;
+    font-size: 10px;
+    font-weight: 800;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #2e7d32;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+    transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .cart-container:hover .cart-badge {
+    transform: scale(1.15) rotate(5deg);
+  }
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const userEmail = "<%= user ? user.email : '' %>";
+  if (userEmail) {
+    const cartKey = "cartItems_" + userEmail;
+    
+    function refreshNavCart() {
+      const items = JSON.parse(localStorage.getItem(cartKey)) || [];
+      const countEl = document.getElementById("cartCount");
+      if (countEl) countEl.innerText = items.length || 0;
+    }
+
+    refreshNavCart();
+
+    // Listen for storage changes from other tabs
+    window.addEventListener('storage', (e) => {
+      if (e.key === cartKey) refreshNavCart();
+    });
+
+    // Make the cart trigger the checkout form directly
+    const trigger = document.getElementById("navCartTrigger");
+    if (trigger) {
+      trigger.addEventListener("click", () => {
+        const items = JSON.parse(localStorage.getItem(cartKey)) || [];
+        const checkoutForm = document.getElementById("checkoutForm");
+        const cartDataInput = document.getElementById("cartData");
+        if (checkoutForm && cartDataInput) {
+          cartDataInput.value = JSON.stringify(items);
+          checkoutForm.submit();
+        }
+      });
+    }
+  }
+});
+</script>
+    </nav>
+  </header>
+

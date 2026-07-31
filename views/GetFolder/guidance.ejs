@@ -1,0 +1,43 @@
+  <title>AgriBid - Farming Guidance</title>
+
+<!--boiler plats-->
+<% layout("../layoutes/WebBoilerplats") %>
+  <link rel="stylesheet" href="/css/guidance.css" />
+
+  <header class="page-header">
+    <h1>🌱 Farming Guidance Hub</h1>
+    <p>Empowering Farmers with Expert Knowledge & Essential Strategies</p>
+  </header>
+
+  <main class="container">
+    <section class="guidance-list" id="guidance-list">
+      <h2>📘 Knowledge Library</h2>
+      <div class="cards" id="cards-container"></div>
+    </section>
+
+    <section class="guidance-form">
+      <h2>✨ Contribute New Knowledge</h2>
+      <form id="add-guidance-form">
+        <input type="text" id="guidance-title" placeholder="Enter article title (e.g., Organic Fertilizer Guide)" required />
+        <textarea id="guidance-desc" rows="5" placeholder="Share detailed farming advice, steps, or knowledge..." required></textarea>
+        <input type="url" id="guidance-image" placeholder="Image URL (Leave blank for default agriculture image)" />
+        <button type="submit">Publish Guidance</button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Article View Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span id="close-modal" title="Close window">&times;</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-description"></p>
+    </div>
+  </div>
+
+
+
+
+  <script src="js/guidance.js"></script>
+
+   

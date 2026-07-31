@@ -1,0 +1,58 @@
+<% if (typeof type !== 'undefined' && type === 'pro') { %>
+  <footer class="pro-footer">
+    <div class="footer-primary">
+      <div class="footer-column branding">
+        <div class="footer-logo">🌾 AgriBid<span>.com</span></div>
+        <p class="footer-tagline">Empowering farmers with smarter markets and fair prices. Your digital partner in agriculture.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" title="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-column links">
+        <h4>Quick Explore</h4>
+        <ul>
+          <li><a href="/crops"><i class="fa-solid fa-chevron-right"></i> Marketplace</a></li>
+          <li><a href="/home#bidding"><i class="fa-solid fa-chevron-right"></i> Live Bidding</a></li>
+          <li><a href="/Myorder"><i class="fa-solid fa-chevron-right"></i> Track Orders</a></li>
+          <li><a href="/guidance"><i class="fa-solid fa-chevron-right"></i> Expert Guidance</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column trust">
+        <h4>Why AgriBid?</h4>
+        <div class="trust-style-item">
+          <i class="fa-solid fa-shield-check"></i>
+          <span>Secure Payments</span>
+        </div>
+        <div class="trust-style-item">
+          <i class="fa-solid fa-user-check"></i>
+          <span>Verified Farmers</span>
+        </div>
+        <div class="trust-style-item">
+          <i class="fa-solid fa-truck-fast"></i>
+          <span>Direct Logistics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="bottom-content">
+        <p>&copy; 2025 AgriBid. All Rights Reserved. | <span class="hindi-text">For Farmers, By Farmers</span></p>
+        <div class="bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+<% } else { %>
+  <footer class="simple-footer">
+    <div class="bottom-content" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center;">
+      <p>&copy; 2025 AgriBid. All Rights Reserved. | <span class="hindi-text">Digital Agri Revolution</span></p>
+    </div>
+  </footer>
+<% } %>

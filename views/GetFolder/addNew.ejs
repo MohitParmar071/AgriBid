@@ -1,0 +1,175 @@
+<!-- boiler plats -->
+<% layout("../layoutes/WebBoilerplats") %>
+<title>Add New Crops - AgriBid - Smarter Farming</title>
+<link rel="stylesheet" href="/css/addNew.css?v=2" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<main class="main-content">
+  <div class="form-container">
+    <div class="form-header">
+      <div class="header-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+      <h2>Add New Crop</h2>
+      <p>List your produce on the marketplace for thousands of buyers.</p>
+    </div>
+
+    <form method="POST" action="/crops" enctype="multipart/form-data" id="cropForm">
+
+      <!-- First row: Crop Name + Type -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-seedling"></i> Crop Name</label>
+          <input type="text" placeholder="e.g. Organic Wheat" name="crops[name]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-layer-group"></i> List as</label>
+          <select name="crops[Type]" required>
+            <option value="buy">Fixed Price (Buy Now)</option>
+            <option value="bid">Auction (Bidding)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Second row: Price + Quantity -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-indian-rupee-sign"></i> Price (Base price)</label>
+          <input type="number" placeholder="Enter amount" name="crops[price]" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-weight-hanging"></i> Stock Quantity</label>
+          <input type="text" placeholder="e.g. 500kg / 10 Quintal" name="crops[quantity]" required>
+        </div>
+      </div>
+
+      <!-- Third row: Seller + Email -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-user-tie"></i> Seller Full Name</label>
+          <input type="text" placeholder="Your name" name="crops[seller]" value="<%= user.name %>" required>
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-envelope"></i> Contact Email</label>
+          <input type="email" placeholder="email@example.com" name="crops[email]" value="<%= user.email %>" required>
+        </div>
+      </div>
+
+      <!-- Fourth row: Contact + Address -->
+      <div class="form-row">
+        <div class="input-group">
+          <label><i class="fa-solid fa-phone"></i> Contact Number</label>
+          <div class="input-unit-wrapper">
+            <select id="countryCode" class="country-select">
+              <option value="+91">🇮🇳 +91</option>
+              <option value="+1">🇺🇸 +1</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+61">🇦🇺 +61</option>
+              <option value="+1">🇨🇦 +1</option>
+              <option value="+86">🇨🇳 +86</option>
+              <option value="+33">🇫🇷 +33</option>
+              <option value="+49">🇩🇪 +49</option>
+              <option value="+81">🇯🇵 +81</option>
+              <option value="+65">🇸🇬 +65</option>
+              <option value="+27">🇿🇦 +27</option>
+              <option value="+94">🇱🇰 +94</option>
+              <option value="+92">🇵🇰 +92</option>
+              <option value="+880">🇧🇩 +880</option>
+              <option value="+7">🇷🇺 +7</option>
+              <option value="+55">🇧🇷 +55</option>
+            </select>
+            <input type="tel" id="phoneInput" placeholder="10-digit number" required maxlength="10">
+          </div>
+          <span id="phoneError" class="error-msg">Must be 10 digits</span>
+          <input type="hidden" name="crops[contact]" id="finalContact">
+        </div>
+        <div class="input-group">
+          <label><i class="fa-solid fa-map-location-dot"></i> Farm City / Address</label>
+          <input type="text" placeholder="City, State" name="crops[city]" required>
+        </div>
+      </div>
+
+      <!-- Fifth row: Image + UPI -->
+      <div class="form-row two-equal">
+        <div class="input-group">
+          <label><i class="fa-solid fa-camera"></i> Product Image</label>
+          <div class="file-upload-wrapper">
+            <input type="file" name="image" id="fileInput" accept="image/*" required>
+            <div class="file-dummy" id="fileDummy">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span id="fileName">Drop photo or Click to select</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label><i class="fa-solid fa-building-columns"></i> UPI for Payments</label>
+          <div class="input-unit-wrapper">
+            <input type="text" name="crops[upi]" id="upiInput" placeholder="Enter UPI ID (e.g. username@bank)" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <button type="submit" id="submitBtn"><i class="fa-solid fa-circle-check"></i> List My Crop</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script>
+  const phoneInput = document.getElementById('phoneInput');
+  const countryCode = document.getElementById('countryCode');
+  const finalContact = document.getElementById('finalContact');
+  const phoneError = document.getElementById('phoneError');
+  const submitBtn = document.getElementById('submitBtn');
+  const fileInput = document.getElementById('fileInput');
+  const fileNameDisplay = document.getElementById('fileName');
+  const fileDummy = document.getElementById('fileDummy');
+
+  // Phone Validation
+  phoneInput.addEventListener('input', function(e) {
+    // Remove non-digits
+    this.value = this.value.replace(/\D/g, '');
+    
+    if (this.value.length === 10) {
+      phoneInput.classList.remove('invalid');
+      phoneInput.classList.add('valid');
+      phoneError.style.display = 'none';
+      submitBtn.disabled = false;
+      finalContact.value = countryCode.value + this.value;
+    } else {
+      phoneInput.classList.add('invalid');
+      phoneInput.classList.remove('valid');
+      if (this.value.length > 0) phoneError.style.display = 'block';
+      submitBtn.disabled = true;
+    }
+  });
+
+  countryCode.addEventListener('change', () => {
+    if (phoneInput.value.length === 10) {
+      finalContact.value = countryCode.value + phoneInput.value;
+    }
+  });
+
+  // File Input Styling
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files.length > 0) {
+      fileNameDisplay.innerText = this.files[0].name;
+      fileDummy.classList.add('active');
+    } else {
+      fileNameDisplay.innerText = "Drop photo or Click to select";
+      fileDummy.classList.remove('active');
+    }
+  });
+
+
+  // Preliminary form check
+  document.getElementById('cropForm').addEventListener('submit', function(e) {
+    if (phoneInput.value.length !== 10) {
+       e.preventDefault();
+       alert("Please enter a valid 10-digit contact number.");
+    }
+  });
+</script>
+

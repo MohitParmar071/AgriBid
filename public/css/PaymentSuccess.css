@@ -1,0 +1,44 @@
+.success-container {
+  max-width: 600px;
+  margin: 60px auto;
+  background: #f0fff4;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.success-container h1 {
+  color: #2d7a32;
+  margin-bottom: 15px;
+}
+
+.msg {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.success-box {
+  background: #d4edda;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  color: #155724;
+  font-weight: 500;
+}
+
+.action-links .btn {
+  display: inline-block;
+  background: #2d7a32;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  margin: 10px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.action-links .btn:hover {
+  background: #218838;
+}

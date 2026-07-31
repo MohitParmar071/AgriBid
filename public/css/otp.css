@@ -1,0 +1,143 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+:root {
+  --agri-dark: #1b5e20;
+  --agri-mid: #2e7d32;
+  --agri-light: #a5d6a7;
+  --muted: #6b7280;
+  --card-bg: rgba(255, 255, 255, 0.15);
+}
+
+.otp-hero {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background: url("https://images.pexels.com/photos/440731/pexels-photo-440731.jpeg") center/cover no-repeat;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+  z-index: -1;
+}
+
+.otp-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 20px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  color: black;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.otp-card h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #0b3311;
+  margin-bottom: 20px;
+}
+
+.otp-form {
+  display: grid;
+  gap: 15px;
+}
+
+.otp-input-wrap input {
+  width: 100%;
+  padding: 14px;
+  font-size: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: black;
+  text-align: center;
+  outline: none;
+}
+.otp-input-wrap input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-primary {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #0b3311;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #a5d6a7, #66bb6a);
+  transition: transform 0.1s ease;
+}
+.btn-primary:hover {
+  transform: scale(1.03);
+}
+
+.helper-row {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.link-btn {
+  background: transparent;
+  border: none;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.otp-footer-minimal {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.otp-footer-minimal p {
+    font-size: 13px;
+    color: #1b5e20;
+    margin-bottom: 12px;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #ffb300;
+    color: #1b5e20;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s;
+}
+
+.home-btn:hover {
+    background-color: #ffa000;
+}

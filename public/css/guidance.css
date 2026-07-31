@@ -1,0 +1,256 @@
+/* Global Base */
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: #f8fff9;
+  color: #333;
+}
+
+/* Page Header Element (Optional but good if un-commented later) */
+.page-header {
+  text-align: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #1b5e20, #4caf50);
+  color: white;
+  border-bottom: 5px solid #a5d6a7;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+
+/* Main Container */
+.container {
+  max-width: 1280px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* Section Headings */
+.guidance-list h2, .guidance-form h2 {
+  font-size: 28px;
+  color: #1b5e20;
+  margin-bottom: 25px;
+  border-bottom: 3px solid #e0f2f1;
+  padding-bottom: 10px;
+  font-weight: 700;
+}
+
+/* Form Styling - Premium Dashboard Look */
+.guidance-form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  margin-top: 60px;
+  border: 1px solid #edf5ee;
+}
+
+.guidance-form input,
+.guidance-form textarea {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.guidance-form input:focus,
+.guidance-form textarea:focus {
+  border-color: #4caf50;
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.1);
+}
+
+.guidance-form button {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  border: none;
+  padding: 16px 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.guidance-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+/* Cards Grid */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+/* Card Design */
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
+  border: 1px solid rgba(0, 128, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 35px rgba(46, 125, 50, 0.12);
+}
+
+/* Card Image Wrapper */
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* Card Content Area */
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-content h3 {
+  color: #2e7d32;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.card-content p {
+  color: #666;
+  font-size: 14.5px;
+  line-height: 1.6;
+  flex-grow: 1;
+  margin: 0 0 20px 0;
+}
+
+/* Action Buttons Grid in Card */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.actions button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all 0.2s;
+  flex: 1;
+}
+
+/* View Button prominent */
+.view-btn {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  flex: 2 !important;
+  border: 1px solid #c8e6c9 !important;
+}
+
+.view-btn:hover {
+  background-color: #c8e6c9;
+}
+
+/* Smaller Admin Buttons */
+.edit-btn {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+.edit-btn:hover { background-color: #ffe0b2; }
+
+.delete-btn {
+  background-color: #ffebee;
+  color: #c62828;
+}
+.delete-btn:hover { background-color: #ffcdd2; }
+
+
+/* Polished Modal Dialog */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: white;
+  margin: 6% auto;
+  padding: 40px;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 20px;
+  position: relative;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+  animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.2);
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+#close-modal {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+  font-size: 28px;
+  color: #999;
+  transition: color 0.2s;
+}
+
+#close-modal:hover {
+  color: #f44336;
+}
+
+#modal-title {
+  font-size: 26px;
+  color: #1b5e20;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 800;
+  padding-right: 30px; /* space for close btn */
+}
+
+#modal-description {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.8;
+  white-space: pre-wrap; /* Preserve line breaks */
+}

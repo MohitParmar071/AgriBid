@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #dcedc8; /* Fallback light green */
+  background-image: url("/bg_generated.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* === Container from Boilerplate === */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  min-height: calc(100vh - 60px);
+}
+
+/* === Form Container (Login Box) === */
+.form-container {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 20px 25px;
+  border-radius: 15px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 90%;
+  max-width: 500px;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  margin-top: 15px;
+  margin-bottom: 25px;
+}
+
+/* Heading */
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 26px;
+  color: green;
+}
+
+/* Form Fields */
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 2px;
+  font-size: 13.5px;
+  color: #000;
+  font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 8px;
+  border: none;
+  border-bottom: 2px solid #555;
+  background: transparent;
+  color: #000;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-bottom: 2px solid green;
+}
+
+/* Password Eye Icon */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 35px;
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strength-segments {
+  display: flex;
+  gap: 5px;
+  width: 100%;
+}
+
+.segment {
+  height: 6px;
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.15); /* Inactive segment */
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Single elegant brand color for active segments */
+.segment.seg-active { 
+  background-color: #2e7d32; 
+}
+
+.strength-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333; /* Highly readable dark gray */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+}
+
+.toggle-password:hover {
+  color: green;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+/* Submit Button */
+.form-actions {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.form-actions button {
+  padding: 8px 25px;
+  background-color: green;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-actions button:hover {
+  background-color: darkgreen;
+}
+
+/* ===== Login Link ===== */
+.login-link {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.login-link a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.login-link a:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+/* === Footer === */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #2e7d32;
+  color: white;
+  text-align: center;
+  padding: 20px 15px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.footer-btn{
+    background: orange;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+}
+
+.error-message {
+  color: #ff4d4d;
+  font-size: 13px;
+  margin-top: 5px;
+  display: block;
+}
+
+/* ===== Professional Avatar Upload ===== */
+.avatar-upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.avatar-preview {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  border-radius: 50%;
+  border: 3px solid #2e7d32;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.avatar-preview:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+#imagePreview {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* SVG placeholder for blank user profile */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23666'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/%3E%3C/svg%3E");
+}
+
+.avatar-overlay {
+  position: absolute;
+  bottom: 0px;
+  right: -5px;
+  background-color: #2e7d32;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  border: 2px solid white;
+}

@@ -1,0 +1,243 @@
+body {
+  background: #f0f4f3;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  min-height: calc(100vh - 100px);
+}
+
+.form-container {
+  background: #ffffff;
+  width: 100%;
+  max-width: 900px;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 15px;
+}
+
+.form-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1b5e20;
+  margin: 0 0 8px 0;
+}
+
+.form-header p {
+  color: #666;
+  font-size: 15px;
+}
+
+/* Form rows */
+.form-row {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+label i {
+  color: #28a745;
+  width: 16px;
+}
+
+/* Base Input Styles */
+input, select {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1.5px solid #e0e0e0;
+  outline: none;
+  font-size: 15px;
+  background: #fbfcfb;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+input:focus, select:focus {
+  border-color: #28a745;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1);
+}
+
+/* Combined Unit Input Design (Phone & UPI) */
+.input-unit-wrapper {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fbfcfb;
+  transition: border-color 0.3s;
+}
+
+.input-unit-wrapper:focus-within {
+  border-color: #28a745;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1);
+}
+
+.unit-select, .country-select {
+  width: 90px;
+  border: none;
+  background: #f1f8f3;
+  border-radius: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: #1b5e20;
+}
+
+.unit-select {
+  border-left: 1.5px solid #e0e0e0;
+  width: 110px;
+}
+
+.country-select {
+  border-right: none;
+  width: 85px;
+}
+
+.unit-select:hover, .country-select:hover {
+  background: #e8f5e9;
+}
+
+#phoneInput, #upiInput {
+  border: none;
+  background: transparent !important;
+  border-radius: 0;
+  flex: 1;
+  padding: 12px 15px;
+}
+
+#phoneInput.invalid { border-bottom: 2px solid #e74c3c; }
+#phoneInput.valid { border-bottom: 2px solid #28a745; }
+
+.error-msg {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+  display: none;
+}
+
+/* Modern File Upload Area */
+.file-upload-wrapper {
+  position: relative;
+  height: 52px;
+  cursor: pointer;
+}
+
+#fileInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.file-dummy {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #fbfcfb;
+  border: 1.5px dashed #ccc;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 12px;
+  transition: all 0.3s;
+  color: #888;
+}
+
+.file-dummy i { font-size: 20px; }
+.file-dummy.active {
+  border-color: #28a745;
+  background: rgba(40, 167, 69, 0.05);
+  color: #1b5e20;
+  border-style: solid;
+}
+
+/* Button & Footer */
+.form-footer {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button[type="submit"] {
+  width: 100%;
+  max-width: 300px;
+  padding: 16px;
+  background: #28a745;
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 17px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: #1b5e20;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(27, 94, 32, 0.3);
+}
+
+button[type="submit"]:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row { flex-direction: column; gap: 18px; }
+  .form-container { padding: 25px; }
+}

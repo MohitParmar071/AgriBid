@@ -1,0 +1,204 @@
+/* ===== General Layout ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 75px; 
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #dcedc8; /* Fallback light green if image fails */
+  background-image: url("/bg_generated.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/* ===== Main Container to hold content + footer ===== */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px;
+  min-height: calc(100vh - 75px);
+}
+
+/* ===== Login Box ===== */
+.form-container {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 35px 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  width: 90%;
+  max-width: 400px;
+  color: black;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 28px;
+  color: green;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: #000;
+  font-weight: 600;
+}
+
+.form-group input {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid #555;
+  background: transparent;
+  color: #000;
+  font-size: 15px;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-bottom: 2px solid green;
+}
+
+/* Password Eye Icon */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 30px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+}
+
+.toggle-password:hover {
+  color: green;
+}
+
+/* ===== Form Actions ===== */
+.forgot {
+  text-align: left;
+  margin-bottom: 15px;
+}
+
+.forgot a {
+  font-size: 14px;
+  color: green;
+  text-decoration: none;
+}
+
+
+.forgot:hover{
+  text-decoration: underline green;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  padding: 10px 25px;
+  background-color: green;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-actions button:hover {
+  background-color: darkgreen;
+}
+
+/* ===== Register Link ===== */
+.register-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.register-link a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.register-link a:hover {
+  color: green;
+  text-decoration: underline;
+}
+
+/* ===== Alert Box ===== */
+.alert {
+  background: rgba(255, 255, 255, 0.15);
+  color: #721c24;
+  border: 2px dashed #f5c6cb;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.alert p {
+  margin: 0;
+  padding: 0 10px;
+}
+
+/* ===== Footer Styling ===== */
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: #2e7d32;
+  color: white;
+  text-align: center;
+  padding: 25px 15px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.footer-btn{
+  background: orange;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
